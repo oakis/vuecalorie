@@ -1,10 +1,12 @@
 <template>
   <header>
-    <h1>Vue Calorie App</h1>
+    <router-link to="/">
+      <h1>Vue Calorie App</h1>
+    </router-link>
     <nav>
-      <a href>Hitta recept</a>
-      <a href>Min sida</a>
-      <a href>Om VCA</a>
+      <router-link to="/user">Min sida</router-link>
+      <router-link to="/recipe">Hitta recept</router-link>
+      <router-link to="/about">Om VCA</router-link>
     </nav>
   </header>
 </template>
@@ -23,9 +25,13 @@ header {
   grid-template-rows: auto;
   background-color: green;
   padding: 25px;
+  a {
+    text-decoration: none;
+  }
   h1 {
     font-size: 3em;
     margin: 0;
+    color: #111;
   }
   nav {
     display: flex;
@@ -35,7 +41,6 @@ header {
       font-size: 1.5em;
       color: #111;
       margin: 0 10px;
-      text-decoration: none;
     }
   }
 }
