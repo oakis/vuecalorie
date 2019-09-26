@@ -4,8 +4,8 @@
       <h1>Vue Calorie App</h1>
     </router-link>
     <nav>
-      <router-link to="/recipe">Hitta recept</router-link>
       <router-link to="/user">Min sida</router-link>
+      <router-link to="/recipe">Hitta recept</router-link>
       <router-link to="/about">Om VCA</router-link>
     </nav>
   </header>
