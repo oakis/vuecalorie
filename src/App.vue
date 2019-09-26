@@ -2,7 +2,8 @@
   <div id="app">
     <Header />
     <main>
-      <p>Router content</p>
+      <!-- <p>Router content</p> -->
+      <About />
     </main>
     <Footer />
   </div>
@@ -12,11 +13,13 @@
 import { Component, Vue } from "vue-property-decorator";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
+import About from "./components/About.vue";
 
 @Component({
   components: {
     Header,
-    Footer
+    Footer,
+    About
   }
 })
 export default class App extends Vue {}
