@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <Header />
+    <main>
+      <p>Router content</p>
+    </main>
     <Footer />
   </div>
 </template>
@@ -30,5 +33,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding: 0 25px;
+  main {
+    background-color: indianred;
+    padding: 25px;
+  }
 }
 </style>
