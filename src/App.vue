@@ -12,13 +12,11 @@
 import { Component, Vue } from "vue-property-decorator";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
-import About from "./components/About.vue";
 
 @Component({
   components: {
     Header,
-    Footer,
-    About
+    Footer
   }
 })
 export default class App extends Vue {}
@@ -29,6 +27,7 @@ html,
 body {
   margin: 0;
   padding: 0;
+  color: #111;
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
