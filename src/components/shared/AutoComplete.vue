@@ -30,9 +30,8 @@ import Input from "./Input.vue";
 
 @Component
 export default class AutoComplete extends Vue {
-  @Prop()
-  items!: Array<Object>;
-  placeholder: String = "";
+  @Prop() items!: Array<Object>;
+  @Prop() placeholder!: String;
   inputValue: String = "";
   hasSearched: Boolean = false;
 
