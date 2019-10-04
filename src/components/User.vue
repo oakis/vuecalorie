@@ -1,9 +1,10 @@
 <template>
   <div id="user">
     <h2>"Username placeholder"</h2>
-    <Input
+    <AutoComplete
       placeholder="Hitta ingrediens"
       @on-input="searchIngredient($event)"
+      :items="foundIngredients"
     />
   </div>
 </template>
@@ -11,22 +12,23 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import axios from "axios";
-import Input from "./shared/Input.vue";
+import AutoComplete from "./shared/AutoComplete.vue";
 
 @Component({
   components: {
-    Input
+    AutoComplete
   }
 })
 export default class User extends Vue {
+  foundIngredients = [];
+
   async searchIngredient(inputValue: String) {
-    console.log(inputValue);
     const { data } = await axios
       .post("http://localhost:4000/ingredients/search", {
         search: inputValue
       })
       .catch(err => ({ data: err }));
-    console.log(data);
+    this.foundIngredients = data;
   }
 }
 </script>
