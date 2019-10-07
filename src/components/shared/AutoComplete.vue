@@ -17,7 +17,13 @@
       }"
     >
       <ul v-if="items.length > 0">
-        <li v-for="item in items" v-bind:key="item.name">{{ item.name }}</li>
+        <li
+          v-for="item in items"
+          v-bind:key="item.name"
+          @click="onClick(item._id)"
+        >
+          {{ item.name }}
+        </li>
       </ul>
       <p v-else>Hittade inget.</p>
     </div>
@@ -26,7 +32,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import Input from "./Input.vue";
 
 @Component
 export default class AutoComplete extends Vue {
@@ -34,6 +39,12 @@ export default class AutoComplete extends Vue {
   @Prop() placeholder!: String;
   inputValue: String = "";
   hasSearched: Boolean = false;
+
+  onClick(id: String) {
+    this.hasSearched = false;
+    this.inputValue = "";
+    this.$emit("on-click", id);
+  }
 
   onInput() {
     this.hasSearched = true;

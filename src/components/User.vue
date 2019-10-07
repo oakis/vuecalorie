@@ -4,8 +4,19 @@
     <AutoComplete
       placeholder="Hitta ingrediens"
       @on-input="searchIngredient($event)"
+      @on-click="addIngredient($event)"
       :items="foundIngredients"
     />
+    <div id="recipe" v-if="recipe.length">
+      <h3>Ingredienser:</h3>
+      <ul>
+        <li v-for="item in recipe" :key="item._id">{{ item.name }}</li>
+      </ul>
+      <input
+        placeholder="Ge ditt recept ett namn"
+        v-model="recipeNameInputValue"
+      />
+    </div>
   </div>
 </template>
 
@@ -21,6 +32,16 @@ import AutoComplete from "./shared/AutoComplete.vue";
 })
 export default class User extends Vue {
   foundIngredients = [];
+  recipe = [];
+  recipeNameInputValue = "";
+
+  addIngredient(id: String) {
+    const ingredientToAdd = this.foundIngredients.find(
+      ingredient => ingredient._id === id
+    );
+    this.recipe.push(ingredientToAdd);
+    this.foundIngredients = [];
+  }
 
   async searchIngredient(inputValue: String) {
     const { data } = await axios
