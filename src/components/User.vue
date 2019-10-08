@@ -16,6 +16,7 @@
         placeholder="Ge ditt recept ett namn"
         v-model="recipeNameInputValue"
       />
+      <button @click="saveRecipe">Spara recept</button>
     </div>
   </div>
 </template>
@@ -57,6 +58,15 @@ export default class User extends Vue {
       })
       .catch(err => ({ data: err }));
     this.foundIngredients = data;
+  }
+
+  async saveRecipe() {
+    const { data } = await axios
+      .post("http://localhost:4000/recipes", {
+        name: this.recipeNameInputValue,
+        ingredients: this.recipe.map(obj => obj._id)
+      })
+      .catch(err => ({ data: err }));
   }
 }
 </script>
