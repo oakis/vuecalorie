@@ -25,20 +25,27 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import axios from "axios";
 import AutoComplete from "./shared/AutoComplete.vue";
 
+interface Ingredient {
+  readonly _id: String;
+  name: String;
+  kcal: Number;
+  readonly __v: Number;
+}
+
 @Component({
   components: {
     AutoComplete
   }
 })
 export default class User extends Vue {
-  foundIngredients = [];
-  recipe = [];
-  recipeNameInputValue = "";
+  foundIngredients: Array<Ingredient> = [];
+  recipe: Array<Ingredient> = [];
+  recipeNameInputValue: String = "";
 
   addIngredient(id: String) {
     const ingredientToAdd = this.foundIngredients.find(
       ingredient => ingredient._id === id
-    );
+    )!;
     this.recipe.push(ingredientToAdd);
     this.foundIngredients = [];
   }
