@@ -31,7 +31,6 @@ export default class About extends Vue {}
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto;
-  background-color: purple;
   p {
     margin: 0;
   }

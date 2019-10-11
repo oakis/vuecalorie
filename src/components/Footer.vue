@@ -16,7 +16,6 @@ footer {
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto;
-  background-color: purple;
   padding: 10px 25px;
   justify-content: flex-end;
   p {
