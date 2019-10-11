@@ -11,3 +11,10 @@ export interface IRecipe {
     ingredients: Array<IIngredient>;
     readonly __v: number;
 }
+
+export interface IUser {
+    readonly _id: string;
+    username: string;
+    email: string;
+    token: string;
+}
