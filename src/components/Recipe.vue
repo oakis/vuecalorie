@@ -7,14 +7,7 @@
       @on-click="loadRecipe($event)"
       :items="foundRecipes"
     />
-    <div v-if="recipe && recipe.hasOwnProperty('name')">
-      <h2>{{ recipe.name }}</h2>
-      <ul>
-        <li v-for="item in recipe.ingredients" v-bind:key="item._id">
-          {{ item.name }}
-        </li>
-      </ul>
-    </div>
+    <Recipe :recipe="recipe" />
   </div>
 </template>
 
@@ -22,22 +15,22 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import axios from "axios";
 import AutoComplete from "./shared/AutoComplete.vue";
+import Recipe from "./shared/Recipe.vue";
 import { IRecipe } from "./types";
+import { loadRecipe } from "./helpers";
 
 @Component({
   components: {
-    AutoComplete
+    AutoComplete,
+    Recipe
   }
 })
-export default class User extends Vue {
+export default class RecipeView extends Vue {
   foundRecipes: Array<IRecipe> = [];
   recipe: IRecipe = null;
 
   async loadRecipe(id: string) {
-    const { data } = await axios
-      .get(`http://localhost:4000/recipes/${id}`)
-      .catch(err => ({ data: err }));
-    this.recipe = data;
+    this.recipe = await loadRecipe(id);
     this.foundRecipes = [];
   }
 
