@@ -35,7 +35,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   padding: 0 25px;
   main {
-    background-color: indianred;
     padding: 25px;
   }
 }

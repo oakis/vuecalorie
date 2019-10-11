@@ -5,6 +5,7 @@ import App from "./App.vue";
 import About from "./components/About.vue";
 import Start from "./components/Start.vue";
 import User from "./components/User.vue";
+import Recipe from "./components/Recipe.vue";
 
 Vue.use(Vuex);
 const store = new Vuex.Store({
@@ -18,7 +19,7 @@ Vue.config.productionTip = false;
 
 const routes = [
   { path: "", component: Start },
-  { path: "/recipe", component: About },
+  { path: "/recipe", component: Recipe },
   { path: "/user", component: User },
   { path: "/about", component: About }
 ];

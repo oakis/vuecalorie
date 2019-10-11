@@ -25,13 +25,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import axios from "axios";
 import AutoComplete from "./shared/AutoComplete.vue";
-
-interface Ingredient {
-  readonly _id: String;
-  name: String;
-  kcal: Number;
-  readonly __v: Number;
-}
+import { IIngredient } from "./types";
 
 @Component({
   components: {
@@ -39,11 +33,11 @@ interface Ingredient {
   }
 })
 export default class User extends Vue {
-  foundIngredients: Array<Ingredient> = [];
-  recipe: Array<Ingredient> = [];
-  recipeNameInputValue: String = "";
+  foundIngredients: Array<IIngredient> = [];
+  recipe: Array<IIngredient> = [];
+  recipeNameInputValue: string = "";
 
-  addIngredient(id: String) {
+  addIngredient(id: string) {
     const ingredientToAdd = this.foundIngredients.find(
       ingredient => ingredient._id === id
     )!;
@@ -51,7 +45,7 @@ export default class User extends Vue {
     this.foundIngredients = [];
   }
 
-  async searchIngredient(inputValue: String) {
+  async searchIngredient(inputValue: string) {
     const { data } = await axios
       .post("http://localhost:4000/ingredients/search", {
         search: inputValue
@@ -76,7 +70,6 @@ export default class User extends Vue {
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto;
-  background-color: purple;
   p {
     margin: 0;
   }
