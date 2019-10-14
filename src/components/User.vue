@@ -32,16 +32,22 @@
       <Recipe v-if="selectedRecipe !== null" :recipe="selectedRecipe" />
     </div>
   </div>
-  <div v-else>
-    <h2>Skapa ett konto</h2>
-    <input placeholder="Användarnamn" v-model="regUsernameInput" />
-    <input placeholder="E-mail" v-model="regEmailInput" />
-    <input placeholder="Lösenord" v-model="regPasswordInput" type="password" />
-    <button @click="registerUser">Registrera</button>
-    <h2>..eller logga in</h2>
-    <input placeholder="Användarnamn" v-model="usernameInput" />
-    <input placeholder="Lösenord" v-model="passwordInput" type="password" />
-    <button @click="loginUser">Logga in</button>
+  <div id="logged-out" v-else>
+    <div id="logged-out-box">
+      <h2>Skapa ett konto..</h2>
+      <input placeholder="Användarnamn" v-model="regUsernameInput" />
+      <input placeholder="E-mail" v-model="regEmailInput" />
+      <input
+        placeholder="Lösenord"
+        v-model="regPasswordInput"
+        type="password"
+      />
+      <button @click="registerUser">Registrera</button>
+      <h2>..eller logga in</h2>
+      <input placeholder="Användarnamn" v-model="usernameInput" />
+      <input placeholder="Lösenord" v-model="passwordInput" type="password" />
+      <button @click="loginUser">Logga in</button>
+    </div>
   </div>
 </template>
 
@@ -151,6 +157,16 @@ export default class User extends Vue {
   ul {
     margin: 0;
     padding-left: 20px;
+  }
+}
+
+#logged-out {
+  display: flex;
+  justify-content: center;
+  #logged-out-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 </style>

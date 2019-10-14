@@ -23,7 +23,7 @@ header {
   display: grid;
   grid-template-columns: auto auto;
   grid-template-rows: auto;
-  background-color: green;
+  background-color: #fff;
   padding: 25px;
   a {
     text-decoration: none;
