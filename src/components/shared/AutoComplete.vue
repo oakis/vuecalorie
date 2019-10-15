@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="input-with-icon" :ref="'input'">
-      <Icon :icon="['fas', 'user']" />
+      <Icon :icon="['fas', 'search']" />
       <input
         :placeholder="this.placeholder"
         @input="onInput"
@@ -68,6 +68,7 @@ export default class AutoComplete extends Vue {
     flex: 1;
     position: relative;
     input {
+      margin: 0px !important;
       width: calc(100% - 2em - 20px);
     }
   }

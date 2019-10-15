@@ -40,6 +40,9 @@ header {
     a {
       font-size: 1.5em;
       margin: 0 10px;
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
 }
