@@ -31,7 +31,8 @@ h5,
 h6,
 p,
 a,
-span {
+span,
+li {
   font-family: "Roboto", sans-serif;
   color: #333;
 }
