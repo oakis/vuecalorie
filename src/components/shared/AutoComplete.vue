@@ -1,11 +1,13 @@
 <template>
   <div class="wrapper">
-    <input
-      :placeholder="this.placeholder"
-      @input="onInput"
-      v-model="inputValue"
-      :ref="'input'"
-    />
+    <div class="input-with-icon" :ref="'input'">
+      <Icon :icon="['fas', 'user']" />
+      <input
+        :placeholder="this.placeholder"
+        @input="onInput"
+        v-model="inputValue"
+      />
+    </div>
     <div
       class="itemContainer"
       v-if="hasSearched === true && inputValue.length > 0"
@@ -32,8 +34,13 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import Icon from "./Icon.vue";
 
-@Component
+@Component({
+  components: {
+    Icon
+  }
+})
 export default class AutoComplete extends Vue {
   @Prop() items!: Array<Object>;
   @Prop() placeholder!: String;
@@ -57,9 +64,12 @@ export default class AutoComplete extends Vue {
 .wrapper {
   display: flex;
   flex-direction: column;
-  input {
+  .input-with-icon {
     flex: 1;
     position: relative;
+    input {
+      width: calc(100% - 2em - 20px);
+    }
   }
 }
 .itemContainer {

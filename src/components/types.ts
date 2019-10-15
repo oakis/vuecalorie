@@ -18,3 +18,5 @@ export interface IUser {
   email: string;
   token: string;
 }
+
+export type IconType = Array<String>;

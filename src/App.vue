@@ -23,7 +23,15 @@ export default class App extends Vue {}
 </script>
 
 <style lang="scss">
-* {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+span {
   font-family: "Roboto", sans-serif;
   color: #333;
 }
@@ -63,6 +71,17 @@ body {
   .cta-button {
     background-color: #94cc66;
     box-shadow: 2px 2px 0.1em #558033;
+  }
+  .input-with-icon {
+    position: relative;
+    svg {
+      position: absolute;
+      left: 15px;
+      top: 15px;
+    }
+    input {
+      padding-inline-start: 2em;
+    }
   }
 }
 </style>
