@@ -1,12 +1,12 @@
 <template>
   <header>
     <router-link to="/">
-      <h1>Vue Calorie App</h1>
+      <h1>Calorify</h1>
     </router-link>
     <nav>
       <router-link to="/user">Min sida</router-link>
       <router-link to="/recipe">Hitta recept</router-link>
-      <router-link to="/about">Om VCA</router-link>
+      <router-link to="/about">Om</router-link>
     </nav>
   </header>
 </template>
@@ -29,9 +29,9 @@ header {
     text-decoration: none;
   }
   h1 {
+    color: #6e93d6;
     font-size: 3em;
     margin: 0;
-    color: #111;
   }
   nav {
     display: flex;
@@ -39,7 +39,6 @@ header {
     justify-content: flex-end;
     a {
       font-size: 1.5em;
-      color: #111;
       margin: 0 10px;
     }
   }

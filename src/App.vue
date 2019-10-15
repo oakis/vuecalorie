@@ -25,13 +25,13 @@ export default class App extends Vue {}
 <style lang="scss">
 * {
   font-family: "Roboto", sans-serif;
+  color: #333;
 }
 html,
 body {
   font-size: 1.1em;
   margin: 0;
   padding: 0;
-  color: #111;
   background-color: #f5f5f5;
 }
 #app {
@@ -48,13 +48,21 @@ body {
     padding: 10px;
     border: 0;
     border-radius: 5px;
-    box-shadow: 0px 0px 0.1em #111;
+    box-shadow: 1px 1px 0.2em #333;
     outline: none;
   }
   button {
-    font-weight: bold;
-    padding: 15px;
+    color: #fff;
+    background-color: #6e93d6;
+    box-shadow: 2px 2px 0.1em #3d5a8f;
+    padding: 10px 20px;
     cursor: pointer;
+  }
+
+  // Classes
+  .cta-button {
+    background-color: #94cc66;
+    box-shadow: 2px 2px 0.1em #558033;
   }
 }
 </style>

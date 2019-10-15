@@ -42,7 +42,7 @@
         v-model="regPasswordInput"
         type="password"
       />
-      <button @click="registerUser">Registrera</button>
+      <button class="cta-button" @click="registerUser">Skapa konto</button>
       <h2>..eller logga in</h2>
       <input placeholder="Användarnamn" v-model="usernameInput" />
       <input placeholder="Lösenord" v-model="passwordInput" type="password" />
