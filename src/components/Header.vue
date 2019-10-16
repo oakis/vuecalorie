@@ -1,7 +1,7 @@
 <template>
   <header>
     <router-link to="/">
-      <h1>Calorify</h1>
+      <h1>Calorify <Icon :icon="['fas', 'utensils']" /></h1>
     </router-link>
     <nav>
       <router-link to="/user">Min sida</router-link>
@@ -13,8 +13,13 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import Icon from "./shared/Icon.vue";
 
-@Component
+@Component({
+  components: {
+    Icon
+  }
+})
 export default class Header extends Vue {}
 </script>
 
