@@ -69,7 +69,7 @@ export default class AutoComplete extends Vue {
     position: relative;
     input {
       margin: 0px !important;
-      width: calc(100% - 2em - 20px);
+      width: calc(100% - 2em - 10px);
     }
     svg {
       left: 11px !important;
