@@ -71,6 +71,10 @@ export default class AutoComplete extends Vue {
       margin: 0px !important;
       width: calc(100% - 2em - 20px);
     }
+    svg {
+      left: 11px !important;
+      top: 11px !important;
+    }
   }
 }
 .itemContainer {
