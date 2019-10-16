@@ -5,7 +5,7 @@ import App from "./App.vue";
 import About from "./components/About.vue";
 import Start from "./components/Start.vue";
 import User from "./components/User.vue";
-import Recipe from "./components/Recipe.vue";
+import FindRecipe from "./components/FindRecipe.vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -26,7 +26,7 @@ Vue.config.productionTip = false;
 
 const routes = [
   { path: "", component: Start },
-  { path: "/recipe", component: Recipe },
+  { path: "/recipe", component: FindRecipe },
   { path: "/user", component: User },
   { path: "/about", component: About }
 ];
