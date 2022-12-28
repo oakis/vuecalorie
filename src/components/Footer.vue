@@ -5,10 +5,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-
-@Component
-export default class Footer extends Vue {}
+export default {
+  name: "FooterComponent",
+};
 </script>
 
 <style scoped lang="scss">
@@ -22,6 +21,7 @@ footer {
   padding: 10px 25px;
   justify-content: flex-end;
   align-self: flex-end;
+
   p {
     margin: 0;
   }

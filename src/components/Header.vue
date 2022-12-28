@@ -1,26 +1,28 @@
 <template>
   <header>
-    <router-link to="/">
-      <h1>Calorify <Icon :icon="['fas', 'utensils']" /></h1>
-    </router-link>
+    <a href="#/">
+      <h1>
+        Calorify
+        <Icon :icon="['fas', 'utensils']" />
+      </h1>
+    </a>
     <nav>
-      <router-link to="/user">Min sida</router-link>
-      <router-link to="/recipe">Hitta recept</router-link>
-      <router-link to="/about">Om</router-link>
+      <a href="#/user">Min sida</a>
+      <a href="#/recipe">Hitta recept</a>
+      <a href="#/about">Om</a>
     </nav>
   </header>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
 import Icon from "./shared/Icon.vue";
 
-@Component({
+export default {
+  name: "HeaderComponent",
   components: {
-    Icon
-  }
-})
-export default class Header extends Vue {}
+    Icon,
+  },
+};
 </script>
 
 <style scoped lang="scss">
@@ -30,21 +32,26 @@ header {
   grid-template-rows: auto;
   background-color: #fff;
   padding: 25px;
+
   a {
     text-decoration: none;
   }
+
   h1 {
     color: #6e93d6;
     font-size: 3em;
     margin: 0;
   }
+
   nav {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
     a {
       font-size: 1.5em;
       margin: 0 10px;
+
       &:last-child {
         margin-right: 0;
       }

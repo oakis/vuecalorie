@@ -20,10 +20,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-
-@Component
-export default class About extends Vue {}
+export default {
+  name: "AboutView",
+};
 </script>
 
 <style scoped lang="scss">
@@ -31,9 +30,11 @@ export default class About extends Vue {}
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto;
+
   p {
     margin: 0;
   }
+
   ul {
     margin: 0;
     padding-left: 20px;
