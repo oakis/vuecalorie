@@ -3,10 +3,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-
-@Component
-export default class Start extends Vue {}
+export default {
+  name: "StartView",
+};
 </script>
 
 <style scoped lang="scss"></style>

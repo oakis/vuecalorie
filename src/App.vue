@@ -1,26 +1,50 @@
+<script lang="ts">
+import HeaderComponent from "./components/Header.vue";
+import FooterComponent from "./components/Footer.vue";
+import About from "./components/About.vue";
+import Start from "./components/Start.vue";
+import User from "./components/User.vue";
+import FindRecipe from "./components/FindRecipe.vue";
+
+const routes = {
+  "/": Start,
+  "/recipe": FindRecipe,
+  "/user": User,
+  "/about": About,
+};
+
+export default {
+  components: {
+    HeaderComponent,
+    FooterComponent,
+  },
+  data() {
+    return {
+      currentPath: window.location.hash,
+    };
+  },
+  computed: {
+    currentView() {
+      return routes[this.currentPath.slice(1) || "/"];
+    },
+  },
+  mounted() {
+    window.addEventListener("hashchange", () => {
+      this.currentPath = window.location.hash;
+    });
+  },
+};
+</script>
+
 <template>
   <div id="app">
-    <Header />
+    <HeaderComponent />
     <main>
-      <router-view></router-view>
+      <component :is="currentView" />
     </main>
-    <Footer />
+    <FooterComponent />
   </div>
 </template>
-
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import Header from "./components/Header.vue";
-import Footer from "./components/Footer.vue";
-
-@Component({
-  components: {
-    Header,
-    Footer
-  }
-})
-export default class App extends Vue {}
-</script>
 
 <style lang="scss">
 h1,
@@ -36,6 +60,7 @@ li {
   font-family: "Roboto", sans-serif;
   color: #333;
 }
+
 html,
 body {
   font-size: 1.1em;
@@ -43,13 +68,16 @@ body {
   padding: 0;
   background-color: #f5f5f5;
 }
+
 #app {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
   > * {
     padding: 25px 20%;
   }
+
   input,
   button {
     font-size: 1em;
@@ -60,6 +88,7 @@ body {
     box-shadow: 1px 1px 0.2em #333;
     outline: none;
   }
+
   button {
     color: #fff;
     background-color: #6e93d6;
@@ -73,13 +102,16 @@ body {
     background-color: #94cc66;
     box-shadow: 2px 2px 0.1em #558033;
   }
+
   .input-with-icon {
     position: relative;
+
     svg {
       position: absolute;
       left: 15px;
       top: 15px;
     }
+
     input {
       padding-inline-start: 2em;
     }
