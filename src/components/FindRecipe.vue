@@ -39,7 +39,7 @@ export default class RecipeView extends Vue {
       .post("http://localhost:4000/recipes/search", {
         search: inputValue
       })
-      .catch(err => ({ data: err }));
+      .catch(err => err);
     this.foundRecipes = data;
   }
 }
