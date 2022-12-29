@@ -3,7 +3,7 @@
     <a href="#/">
       <h1>
         Calorify
-        <Icon :icon="['fas', 'utensils']" />
+        <Icon icon="fa-solid fa-utensils" size="1x" />
       </h1>
     </a>
     <nav>

@@ -10,10 +10,7 @@
 export default {
   name: "CalorieIcon",
   props: {
-    icon: {
-      type: Array,
-      default: () => [],
-    },
+    icon: String,
     size: String,
   },
 };
