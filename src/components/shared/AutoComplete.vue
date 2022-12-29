@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="input-with-icon">
-      <Icon :icon="['fas', 'search']" />
+      <Icon icon="fa-solid fa-search" />
       <input
         :placeholder="this.placeholder"
         @input="this.onInput"
@@ -17,7 +17,7 @@
             v-bind:key="item.name"
             @click="this.onClick(item._id)"
           >
-            <Icon class="list-icon" :icon="['fas', 'image']" size="3x" />
+            <Icon class="list-icon" icon="fa-solid fa-image" size="3x" />
             <span>{{ item.name }}</span>
           </li>
         </ul>

@@ -170,15 +170,15 @@ export default {
     <div id="logged-out-box">
       <h2>Skapa ett konto..</h2>
       <div class="input-with-icon">
-        <Icon :icon="['fas', 'user']" />
+        <Icon icon="fa-solid fa-user" />
         <input placeholder="Användarnamn" :value="this.regUsernameInput" />
       </div>
       <div class="input-with-icon">
-        <Icon :icon="['fas', 'envelope']" />
+        <Icon icon="fa-solid fa-envelope" />
         <input placeholder="E-mail" :value="this.regEmailInput" />
       </div>
       <div class="input-with-icon">
-        <Icon :icon="['fas', 'lock']" />
+        <Icon icon="fa-solid fa-lock" />
         <input
           placeholder="Lösenord"
           :value="this.regPasswordInput"
@@ -188,11 +188,11 @@ export default {
       <button class="cta-button" @click="this.registerUser">Skapa konto</button>
       <h2>..eller logga in</h2>
       <div class="input-with-icon">
-        <Icon :icon="['fas', 'user']" />
+        <Icon icon="fa-solid fa-user" />
         <input placeholder="Användarnamn" :value="this.usernameInput" />
       </div>
       <div class="input-with-icon">
-        <Icon :icon="['fas', 'lock']" />
+        <Icon icon="fa-solid fa-lock" />
         <input
           placeholder="Lösenord"
           :value="this.passwordInput"
