@@ -10,8 +10,15 @@
 export default {
   name: "CalorieIcon",
   props: {
-    icon: String,
-    size: String,
+    icon: {
+      required: true,
+      type: String
+    },
+    size: {
+      required: false,
+      type: String,
+      default: "1x"
+    },
   },
 };
 </script>

@@ -15,7 +15,7 @@
           <li
             v-for="item in items"
             :key="item.name"
-            @click="onClick(item._id)"
+            @click="onClick(item.id)"
           >
             <Icon
               class="list-icon"
@@ -33,27 +33,45 @@
   </div>
 </template>
 
+<script lang="ts" setup>
+  interface IProps {
+    items: IListItem[] | null;
+    placeholder?: string;
+  }
+
+  interface IListItem {
+    id: string;
+    name: string;
+    [key: string | number | symbol]: unknown;
+  }
+
+  defineProps<IProps>();
+</script>
+
 <script lang="ts">
 import Icon from "./Icon.vue";
+
+
 
 export default {
   components: {
     Icon,
   },
-  props: {
-    items: Array,
-    placeholder: String,
-    inputValue: String,
-    hasSearched: Boolean,
+  data: function() {
+    return {
+      hasSearched: false,
+      inputValue: ''
+    }
   },
   methods: {
-    onClick(id: String) {
-      this.$emit("hasSearched", false);
-      this.$emit("inputValue", "");
+    onClick(id: string) {
+      this.hasSearched = false;
+      this.inputValue = '';
       this.$emit("on-click", id);
     },
-    onInput() {
-      this.$emit("hasSearched", true);
+    onInput(event: Event) {
+      this.inputValue = (event.target as HTMLInputElement).value;
+      this.hasSearched = true;
       this.$emit("on-input", this.inputValue);
     },
   },

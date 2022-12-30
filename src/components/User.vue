@@ -71,12 +71,11 @@ export default {
     },
 
     async searchIngredient(inputValue: string) {
-      // try {
-
-      // } catch (error) {
-
-      // }
-      // this.$emit('foundIngredients', data);
+      try {
+        // this.foundIngredients = data;
+      } catch (error) {
+        this.foundIngredients = null;
+      }
     },
 
     async saveRecipe() {
