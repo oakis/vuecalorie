@@ -1,27 +1,34 @@
 <template>
-  <header>
-    <a href="#/">
-      <h1>
-        Calorify
-        <Icon icon="fa-solid fa-utensils" size="1x" />
-      </h1>
-    </a>
-    <nav>
-      <a href="#/user">Min sida</a>
-      <a href="#/recipe">Hitta recept</a>
-      <a href="#/about">Om</a>
-    </nav>
-  </header>
+  <Page>
+    <header>
+      <a href="#/">
+        <h1>
+          Calorify
+          <Icon
+            icon="fa-solid fa-utensils"
+            size="1x"
+          />
+        </h1>
+      </a>
+      <nav>
+        <a href="#/user">Min sida</a>
+        <a href="#/recipe">Hitta recept</a>
+        <a href="#/about">Om</a>
+      </nav>
+    </header>
+  </Page>
 </template>
 
 <script lang="ts">
 import Icon from "./shared/Icon.vue";
+import Page from "./shared/Page.vue";
 
 export default {
   name: "HeaderComponent",
   components: {
     Icon,
-  },
+    Page
+},
 };
 </script>
 

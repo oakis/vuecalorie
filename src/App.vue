@@ -17,7 +17,7 @@ export default {
   components: {
     HeaderComponent,
     FooterComponent,
-  },
+},
   data() {
     return {
       currentPath: window.location.hash,
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <template>
-  <div id="app">
+  <div>
     <HeaderComponent />
     <main>
       <component :is="currentView" />
@@ -73,10 +73,6 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  > * {
-    padding: 25px 20%;
-  }
 
   input,
   button {
