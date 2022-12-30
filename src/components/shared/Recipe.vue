@@ -1,11 +1,14 @@
 <template>
-  <div v-if="this.recipe && this.recipe.name">
-    <h2>{{ this.recipe.name }}</h2>
+  <div v-if="recipe && recipe.name">
+    <h2>{{ recipe.name }}</h2>
     <div class="recipe-wrapper">
       <div class="recipe-ingredients">
         <h4>Ingredienser</h4>
         <ul>
-          <li v-for="item in this.recipe.ingredients" v-bind:key="item._id">
+          <li
+            v-for="item in recipe.ingredients"
+            :key="item._id"
+          >
             {{ item.name }}
           </li>
         </ul>

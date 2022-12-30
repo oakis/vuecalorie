@@ -3,11 +3,11 @@
     <h2>Hitta recept</h2>
     <AutoComplete
       placeholder="Hitta recept"
-      @on-input="this.searchRecipe($event)"
-      @on-click="this.loadRecipe($event)"
-      :items="this.foundRecipes"
+      :items="foundRecipes"
+      @on-input="searchRecipe($event)"
+      @on-click="loadRecipe($event)"
     />
-    <Recipe :recipe="this.recipe" />
+    <Recipe :recipe="recipe" />
   </div>
 </template>
 

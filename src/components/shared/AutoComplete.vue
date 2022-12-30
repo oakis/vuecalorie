@@ -3,21 +3,25 @@
     <div class="input-with-icon">
       <Icon icon="fa-solid fa-search" />
       <input
-        :placeholder="this.placeholder"
-        @input="this.onInput"
-        :value="this.inputValue"
-      />
-      <div
-        class="itemContainer"
-        v-if="this.hasSearched === true && this.inputValue.length > 0"
+        :placeholder="placeholder"
+        :value="inputValue"
+        @input="onInput"
       >
-        <ul v-if="this.items.length > 0">
+      <div
+        v-if="hasSearched === true && inputValue.length > 0"
+        class="itemContainer"
+      >
+        <ul v-if="items.length > 0">
           <li
-            v-for="item in this.items"
-            v-bind:key="item.name"
-            @click="this.onClick(item._id)"
+            v-for="item in items"
+            :key="item.name"
+            @click="onClick(item._id)"
           >
-            <Icon class="list-icon" icon="fa-solid fa-image" size="3x" />
+            <Icon
+              class="list-icon"
+              icon="fa-solid fa-image"
+              size="3x"
+            />
             <span>{{ item.name }}</span>
           </li>
         </ul>

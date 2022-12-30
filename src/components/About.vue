@@ -11,9 +11,7 @@
         <a href="https://github.com/oakis/vuecalorie">UI på GitHub</a>
       </li>
       <li>
-        <a href="https://github.com/oakis/vuecalorie-express"
-          >Server på GitHub</a
-        >
+        <a href="https://github.com/oakis/vuecalorie-express">Server på GitHub</a>
       </li>
     </ul>
   </div>

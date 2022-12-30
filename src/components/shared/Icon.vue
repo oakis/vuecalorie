@@ -1,7 +1,7 @@
 <template>
   <font-awesome-icon
-    :size="this.size"
-    :icon="this.icon"
+    :size="size"
+    :icon="icon"
     :style="{ color: '#555' }"
   />
 </template>
