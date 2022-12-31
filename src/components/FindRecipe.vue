@@ -1,5 +1,5 @@
 <template>
-  <div id="recipe">
+  <Page id="recipe">
     <h2>Hitta recept</h2>
     <AutoComplete
       placeholder="Hitta recept"
@@ -8,7 +8,7 @@
       @on-click="loadRecipe($event)"
     />
     <Recipe :recipe="recipe" />
-  </div>
+  </Page>
 </template>
 
 <script lang="ts">
@@ -16,24 +16,19 @@ import axios from "axios";
 import AutoComplete from "./shared/AutoComplete.vue";
 import Recipe from "./shared/Recipe.vue";
 import { loadRecipe } from "./helpers";
+import Page from "./shared/Page.vue";
 
 export default {
   components: {
     AutoComplete,
     Recipe,
+    Page
   },
-  props: {
-    foundRecipes: {
-      type: Array,
-      default: () => [],
-    },
-    recipe: {
-      type: Object,
-      default: () => ({
-        name: "",
-        ingredients: [],
-      }),
-    },
+  data: function() {
+    return {
+      foundRecipes: [] as IRecipe[],
+      recipe: {} as IRecipe
+    }
   },
   methods: {
     async loadRecipe(id: string) {

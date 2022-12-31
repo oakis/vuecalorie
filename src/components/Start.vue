@@ -1,10 +1,13 @@
 <template>
-  <div>Använd navigeringen ovan för att hitta eller skapa recept.</div>
+  <Page>Använd navigeringen ovan för att hitta eller skapa recept.</Page>
 </template>
 
 <script lang="ts">
+import Page from './shared/Page.vue';
+
 export default {
-  name: "StartView",
+    name: "StartView",
+    components: { Page }
 };
 </script>
 

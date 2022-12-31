@@ -10,13 +10,15 @@ import {
   User,
   onAuthStateChanged
 } from 'firebase/auth';
+import Page from './shared/Page.vue';
 
 export default {
   name: 'UserComponent',
   components: {
     AutoComplete,
     Recipe,
-  },
+    Page
+},
   data: function() {
     return {
       foundIngredients: [] as IIngredient[],
@@ -92,7 +94,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <Page>
     <div
       v-if="user"
       id="user"
@@ -159,7 +161,7 @@ export default {
         </button>
       </div>
     </div>
-  </div>
+  </Page>
 </template>
 
 <style scoped lang="scss">

@@ -1,5 +1,5 @@
 <template>
-  <div id="about">
+  <Page id="about">
     <h2>Om webbsidan</h2>
     <p>Det startade med att jag ville utöka min kunskap inom programmering.</p>
     <h2>Länkar</h2>
@@ -14,12 +14,15 @@
         <a href="https://github.com/oakis/vuecalorie-express">Server på GitHub</a>
       </li>
     </ul>
-  </div>
+  </Page>
 </template>
 
 <script lang="ts">
+import Page from './shared/Page.vue';
+
 export default {
-  name: "AboutView",
+    name: "AboutView",
+    components: { Page }
 };
 </script>
 

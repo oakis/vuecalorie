@@ -1,5 +1,5 @@
 <template>
-  <Page>
+  <Page background-color="#fff">
     <header>
       <a href="#/">
         <h1>
@@ -37,8 +37,9 @@ header {
   display: grid;
   grid-template-columns: auto auto;
   grid-template-rows: auto;
+  align-items: center;
   background-color: #fff;
-  padding: 25px;
+  height: 90px;
 
   a {
     text-decoration: none;
