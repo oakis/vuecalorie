@@ -11,6 +11,7 @@ import {
   onAuthStateChanged
 } from 'firebase/auth';
 import Page from './shared/Page.vue';
+import { fb } from '@/firebase';
 
 export default {
   name: 'UserComponent',
@@ -27,6 +28,7 @@ export default {
       user: null as User,
       userRecipes: [] as IRecipe[],
       selectedRecipe: null as IRecipe,
+      ingredientInputValue: ""
     };
   },
   mounted: function() {
@@ -74,10 +76,15 @@ export default {
 
     async searchIngredient(inputValue: string) {
       try {
-        // this.foundIngredients = data;
+        const data = await fb.searchIngredient(inputValue);
+        this.foundIngredients = data;
       } catch (error) {
         this.foundIngredients = null;
       }
+    },
+
+    async createIngredient() {
+      fb.addIngredient({ name: this.ingredientInputValue.toLowerCase() })
     },
 
     async saveRecipe() {
@@ -146,6 +153,13 @@ export default {
           :recipe="selectedRecipe"
         />
       </div>
+      <input
+        v-model="ingredientInputValue"
+        placeholder="Lägg till ingrediens"
+      >
+      <button @click="createIngredient">
+        Spara ingrediens
+      </button>
     </div>
     <div
       v-else
