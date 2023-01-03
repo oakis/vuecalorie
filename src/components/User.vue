@@ -67,7 +67,6 @@ export default defineComponent({
     addIngredient(id: string) {
       const ingredientToAdd = this.foundIngredients.find(
         (ingredient) => {
-          console.log(ingredient)
           return ingredient.id === id
         }
       );
@@ -81,7 +80,6 @@ export default defineComponent({
     async searchIngredient(inputValue: string) {
       try {
         const data = await fb.searchIngredient(inputValue);
-        console.log('searchIngredient data', data)
         this.foundIngredients = data;
       } catch (error) {
         this.foundIngredients = [];

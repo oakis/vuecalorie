@@ -72,7 +72,6 @@ const addIngredient = async (ingredient: IIngredient) => {
 };
 
 const saveRecipe = async (recipe: IRecipe) => {
-  console.log({ recipe });
   const id = generateId();
   const payload = {
     ...recipe,
