@@ -52,7 +52,7 @@ const searchIngredient = async (input: string) => {
   const querySnapshot = await getDocs(q);
 
   const results = [];
-  querySnapshot.forEach((doc) => results.push(doc.data()));
+  querySnapshot.forEach((doc) => results.push({ id: doc.id, ...doc.data() }));
   return results;
 };
 
@@ -62,14 +62,25 @@ const addIngredient = async (document) => {
     ...document,
     ...triGram([document.name || ""].join(" ").slice(0, 500)),
   };
-  console.log({ payload });
 
-  // We set the id manually here to ensure ordering
   const postRef = doc(db, "Ingredients", id);
+  await setDoc(postRef, payload);
+};
+
+const saveRecipe = async (recipe: IRecipe) => {
+  console.log({ recipe });
+  const id = generateId();
+  const payload = {
+    ...recipe,
+    ...triGram([recipe.name || ""].join(" ").slice(0, 500)),
+  };
+
+  const postRef = doc(db, "Recipes", id);
   await setDoc(postRef, payload);
 };
 
 export const fb = {
   searchIngredient,
   addIngredient,
+  saveRecipe,
 };

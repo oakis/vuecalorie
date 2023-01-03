@@ -6,14 +6,16 @@
           Calorify
           <Icon
             icon="fa-solid fa-utensils"
-            size="1x"
           />
         </h1>
       </a>
       <nav>
-        <a href="#/user">Min sida</a>
         <a href="#/recipe">Hitta recept</a>
         <a href="#/about">Om</a>
+        <a href="#/user">
+          <Icon
+            icon="fa-solid fa-user"
+          /></a>
       </nav>
     </header>
   </Page>

@@ -2,7 +2,8 @@
   <font-awesome-icon
     :size="size"
     :icon="icon"
-    :style="{ color: '#555' }"
+    :style="cssProps"
+    class="icon"
   />
 </template>
 
@@ -19,6 +20,24 @@ export default {
       type: String,
       default: "1x"
     },
+    color: {
+      required: false,
+      type: String,
+      default: '#555'
+    }
   },
+  computed: {
+    cssProps() {
+      return {
+        '--icon-color': this.color
+      }
+    }
+  }
 };
 </script>
+
+<style scoped lang="scss">
+  .icon {
+    color: var(--icon-color);
+  }
+</style>

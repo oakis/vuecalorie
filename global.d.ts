@@ -5,9 +5,10 @@ interface IIngredient {
 }
 
 interface IRecipe {
-  id: string;
+  id?: string;
   name: string;
   ingredients: IIngredient[];
+  createdBy: string;
 }
 
 type IconType = string[];

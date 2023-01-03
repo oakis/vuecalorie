@@ -1,5 +1,4 @@
 <script lang="ts">
-import axios from 'axios';
 import AutoComplete from './shared/AutoComplete.vue';
 import Recipe from './shared/Recipe.vue';
 import { loadRecipe } from './helpers';
@@ -12,22 +11,24 @@ import {
 } from 'firebase/auth';
 import Page from './shared/Page.vue';
 import { fb } from '@/firebase';
+import Icon from './shared/Icon.vue';
 
 export default {
   name: 'UserComponent',
   components: {
     AutoComplete,
     Recipe,
-    Page
+    Page,
+    Icon
 },
   data: function() {
     return {
       foundIngredients: [] as IIngredient[],
       ingredients: [] as IIngredient[],
       recipeNameInputValue: "",
-      user: null as User,
+      user: null as User | null,
       userRecipes: [] as IRecipe[],
-      selectedRecipe: null as IRecipe,
+      selectedRecipe: {} as IRecipe,
       ingredientInputValue: ""
     };
   },
@@ -52,14 +53,11 @@ export default {
     async registerUserWithGoogle() {
       const auth = useFirebaseAuth();
       const provider = new GoogleAuthProvider();
+      if (!auth) return;
+
       try {
-        const result = await signInWithPopup(auth, provider);
-
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        // const credential = GoogleAuthProvider.credentialFromResult(result);
-        // const token = credential.accessToken;
-
-        this.user = result.user;
+          const result = await signInWithPopup(auth, provider);
+          this.user = result.user;
       } catch (error) {
         console.error(error);
       }
@@ -67,34 +65,43 @@ export default {
 
     addIngredient(id: string) {
       const ingredientToAdd = this.foundIngredients.find(
-        (ingredient) => ingredient._id === id
-      )!;
-      const newIngredients = [...this.recipe, ingredientToAdd];
-      this.recipe = newIngredients;
+        (ingredient) => {
+          console.log(ingredient)
+          return ingredient.id === id
+        }
+      );
+      const newIngredients = [...this.ingredients, ingredientToAdd];
+      this.ingredients = newIngredients;
       this.foundIngredients = [];
     },
 
     async searchIngredient(inputValue: string) {
       try {
         const data = await fb.searchIngredient(inputValue);
+        console.log('searchIngredient data', data)
         this.foundIngredients = data;
       } catch (error) {
-        this.foundIngredients = null;
+        this.foundIngredients = [];
       }
     },
 
     async createIngredient() {
-      fb.addIngredient({ name: this.ingredientInputValue.toLowerCase() })
+      fb.addIngredient({ name: this.ingredientInputValue.toLowerCase() }).then(() => {
+        this.ingredientInputValue = "";
+        alert('Ingrediens tillagd')
+      })
     },
 
     async saveRecipe() {
-      await axios
-        .post('http://localhost:4000/recipes', {
-          name: this.recipeNameInputValue,
-          ingredients: this.recipe.map((obj) => obj._id),
-          createdBy: this.user._id,
-        })
-        .catch((err) => ({ data: err }));
+      fb.saveRecipe({
+        name: this.recipeNameInputValue,
+        ingredients: this.ingredients.map((obj) => obj.id),
+        createdBy: this.user.uid,
+      }).then(() => {
+        this.ingredients = null;
+        this.recipeNameInputValue = '';
+        alert('Recept tillagt')
+      })
     },
   },
 };
@@ -127,8 +134,8 @@ export default {
           </li>
         </ul>
         <input
+          v-model="recipeNameInputValue"
           placeholder="Ge ditt recept ett namn"
-          :value="recipeNameInputValue"
         >
         <button @click="saveRecipe">
           Spara recept
@@ -158,7 +165,10 @@ export default {
         placeholder="Lägg till ingrediens"
       >
       <button @click="createIngredient">
-        Spara ingrediens
+        Spara ingrediens <Icon
+          icon="fa-solid fa-plus"
+          color="#fff"
+        />
       </button>
     </div>
     <div

@@ -65,6 +65,7 @@ export default {
   },
   methods: {
     onClick(id: string) {
+      console.log({id})
       this.hasSearched = false;
       this.inputValue = '';
       this.$emit("on-click", id);
