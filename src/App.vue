@@ -5,6 +5,7 @@ import About from "./components/About.vue";
 import Start from "./components/Start.vue";
 import User from "./components/User.vue";
 import FindRecipe from "./components/FindRecipe.vue";
+import { defineComponent } from "vue";
 
 const routes = {
   "/": Start,
@@ -13,7 +14,7 @@ const routes = {
   "/about": About,
 };
 
-export default {
+export default defineComponent({
   components: {
     HeaderComponent,
     FooterComponent,
@@ -24,16 +25,18 @@ export default {
     };
   },
   computed: {
-    currentView() {
+    currentView(): string {
+      // @ts-ignore
       return routes[this.currentPath.slice(1) || "/"];
     },
   },
   mounted() {
     window.addEventListener("hashchange", () => {
+      // @ts-ignore
       this.currentPath = window.location.hash;
     });
   },
-};
+});
 </script>
 
 <template>

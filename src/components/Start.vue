@@ -3,12 +3,13 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue';
 import Page from './shared/Page.vue';
 
-export default {
+export default defineComponent({
     name: "StartView",
     components: { Page }
-};
+});
 </script>
 
 <style scoped lang="scss"></style>

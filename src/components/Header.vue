@@ -22,16 +22,17 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from "vue";
 import Icon from "./shared/Icon.vue";
 import Page from "./shared/Page.vue";
 
-export default {
+export default defineComponent({
   name: "HeaderComponent",
   components: {
     Icon,
     Page
 },
-};
+});
 </script>
 
 <style scoped lang="scss">

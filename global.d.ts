@@ -1,13 +1,14 @@
 interface IIngredient {
   id: string;
-  name: string;
-  kcal: number;
+  name?: string;
+  kcal?: number;
+  [key: string | number | symbol]: unknown;
 }
 
 interface IRecipe {
-  id?: string;
+  id: string;
   name: string;
-  ingredients: IIngredient[];
+  ingredients: string[];
   createdBy: string;
 }
 

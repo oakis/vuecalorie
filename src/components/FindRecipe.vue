@@ -17,8 +17,9 @@ import AutoComplete from "./shared/AutoComplete.vue";
 import Recipe from "./shared/Recipe.vue";
 import { loadRecipe } from "./helpers";
 import Page from "./shared/Page.vue";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   components: {
     AutoComplete,
     Recipe,
@@ -45,7 +46,7 @@ export default {
       this.$emit("foundRecipes", data);
     },
   },
-};
+});
 </script>
 
 <style scoped lang="scss">

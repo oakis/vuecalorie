@@ -12,8 +12,9 @@ import {
 import Page from './shared/Page.vue';
 import { fb } from '@/firebase';
 import Icon from './shared/Icon.vue';
+import { defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'UserComponent',
   components: {
     AutoComplete,
@@ -70,8 +71,10 @@ export default {
           return ingredient.id === id
         }
       );
-      const newIngredients = [...this.ingredients, ingredientToAdd];
-      this.ingredients = newIngredients;
+      if (ingredientToAdd) {
+        const newIngredients = [...this.ingredients, ingredientToAdd];
+        this.ingredients = newIngredients;
+      }
       this.foundIngredients = [];
     },
 
@@ -86,7 +89,7 @@ export default {
     },
 
     async createIngredient() {
-      fb.addIngredient({ name: this.ingredientInputValue.toLowerCase() }).then(() => {
+      fb.addIngredient({ id: 'undefined', name: this.ingredientInputValue.toLowerCase() }).then(() => {
         this.ingredientInputValue = "";
         alert('Ingrediens tillagd')
       })
@@ -94,17 +97,18 @@ export default {
 
     async saveRecipe() {
       fb.saveRecipe({
+        id: 'undefined',
         name: this.recipeNameInputValue,
         ingredients: this.ingredients.map((obj) => obj.id),
-        createdBy: this.user.uid,
+        createdBy: this.user?.uid ? this.user.uid : 'unknown',
       }).then(() => {
-        this.ingredients = null;
+        this.ingredients = [];
         this.recipeNameInputValue = '';
         alert('Recept tillagt')
       })
     },
   },
-};
+});
 </script>
 
 <template>

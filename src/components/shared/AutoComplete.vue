@@ -11,7 +11,7 @@
         v-if="hasSearched === true && inputValue.length > 0"
         class="itemContainer"
       >
-        <ul v-if="items.length > 0">
+        <ul v-if="items && items.length > 0">
           <li
             v-for="item in items"
             :key="item.name"
@@ -35,13 +35,13 @@
 
 <script lang="ts" setup>
   interface IProps {
-    items: IListItem[] | null;
+    items: IListItem[];
     placeholder?: string;
   }
 
   interface IListItem {
     id: string;
-    name: string;
+    name?: string;
     [key: string | number | symbol]: unknown;
   }
 
@@ -49,11 +49,12 @@
 </script>
 
 <script lang="ts">
+import { defineComponent } from "vue";
 import Icon from "./Icon.vue";
 
 
 
-export default {
+export default defineComponent({
   components: {
     Icon,
   },
@@ -76,7 +77,7 @@ export default {
       this.$emit("on-input", this.inputValue);
     },
   },
-};
+});
 </script>
 
 <style scoped lang="scss">

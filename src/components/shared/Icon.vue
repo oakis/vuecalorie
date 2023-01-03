@@ -2,13 +2,14 @@
   <font-awesome-icon
     :size="size"
     :icon="icon"
-    :style="cssProps"
     class="icon"
   />
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: "CalorieIcon",
   props: {
     icon: {
@@ -26,18 +27,11 @@ export default {
       default: '#555'
     }
   },
-  computed: {
-    cssProps() {
-      return {
-        '--icon-color': this.color
-      }
-    }
-  }
-};
+});
 </script>
 
 <style scoped lang="scss">
   .icon {
-    color: var(--icon-color);
+    color: v-bind(color);
   }
 </style>

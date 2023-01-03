@@ -36,9 +36,13 @@ const generateId = () => {
   return (GENERATION_OFFSET - Date.now()).toString(32) + autoId;
 };
 
+interface ITriGramMap {
+  [key: string]: boolean;
+}
+
 // Generates a trigram
-const triGram = (txt) => {
-  const map = {};
+const triGram = (txt: string) => {
+  const map: ITriGramMap = {};
   const s1 = (txt || "").toLowerCase();
   const n = 3;
   for (let k = 0; k <= s1.length - n; k++) map[s1.substring(k, k + n)] = true;
@@ -51,16 +55,16 @@ const searchIngredient = async (input: string) => {
   const q = query(ingredientsRef, ...searchConstraints, limit(10));
   const querySnapshot = await getDocs(q);
 
-  const results = [];
+  const results: IIngredient[] = [];
   querySnapshot.forEach((doc) => results.push({ id: doc.id, ...doc.data() }));
   return results;
 };
 
-const addIngredient = async (document) => {
+const addIngredient = async (ingredient: IIngredient) => {
   const id = generateId();
   const payload = {
     ...document,
-    ...triGram([document.name || ""].join(" ").slice(0, 500)),
+    ...triGram([ingredient.name || ""].join(" ").slice(0, 500)),
   };
 
   const postRef = doc(db, "Ingredients", id);

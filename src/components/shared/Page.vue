@@ -1,7 +1,6 @@
 <template>
   <div
     class="page-wrapper"
-    :style="cssProps"
   >
     <div class="inner-wrapper">
       <slot>Fallback</slot>
@@ -10,8 +9,10 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 
-export default {
+
+export default defineComponent({
   name: "PageWrapper",
   props: {
     backgroundColor: {
@@ -19,20 +20,13 @@ export default {
       default: '#f5f5f5'
     }
   },
-  computed: {
-    cssProps() {
-      return {
-        '--background-color': this.backgroundColor
-      }
-    }
-  }
-};
+});
 </script>
 
 <style lang="scss">
   .page-wrapper {
     padding: 0 2rem;
-    background-color: var(--background-color);
+    background-color: v-bind(backgroundColor);
   }
   .inner-wrapper {
     margin: auto;
