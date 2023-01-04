@@ -48,18 +48,17 @@ const generateSearchWords = (txt: string) => {
 
 const searchIngredient = async (input: string) => {
   try {
-    const searchConstraints = where(
-      "searchWords",
-      "array-contains-any",
-      generateSearchWords(input)
-    );
+    const searchWords = generateSearchWords(input);
+
+    if (!searchWords.length) return [];
+
+    const searchConstraints = where("searchWords", "array-contains-any", searchWords);
 
     const q = query(ingredientsRef, searchConstraints, limit(10));
     const querySnapshot = await getDocs(q);
 
     const results: IIngredient[] = [];
-    querySnapshot.forEach((doc) => results.push({ id: doc.id, ...doc.data() }));
-    console.log({ results });
+    querySnapshot.forEach((doc) => results.push({ id: doc.id, name: doc.data().name, ...doc.data() }));
     return results;
   } catch (error) {
     console.log({ error });
@@ -72,6 +71,7 @@ const addIngredient = async (ingredient: IIngredient) => {
     const id = generateId();
     const payload = {
       ...ingredient,
+      name: ingredient.name?.toLowerCase(),
       id,
       searchWords: generateSearchWords([ingredient.name || ""].join(" ").slice(0, 500)),
     };
@@ -89,6 +89,7 @@ const saveRecipe = async (recipe: IRecipe) => {
     const id = generateId();
     const payload = {
       ...recipe,
+      name: recipe.name?.toLowerCase(),
       id,
       searchWords: generateSearchWords([recipe.name || ""].join(" ").slice(0, 500)),
     };

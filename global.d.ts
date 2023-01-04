@@ -1,10 +1,8 @@
-interface ISearchWords {
-  [key: string | number | symbol]: unknown;
-}
+type ISearchWords = string[];
 
 interface IIngredient {
   id: string;
-  name?: string;
+  name: string;
   kcal?: number;
   searchWords?: ISearchWords;
 }
