@@ -36,50 +36,69 @@ const generateId = () => {
   return (GENERATION_OFFSET - Date.now()).toString(32) + autoId;
 };
 
-interface ITriGramMap {
-  [key: string]: boolean;
-}
+type ISearchWords = string[];
 
-// Generates a trigram
-const triGram = (txt: string) => {
-  const map: ITriGramMap = {};
+const generateSearchWords = (txt: string) => {
+  const map: ISearchWords = [];
   const s1 = (txt || "").toLowerCase();
   const n = 3;
-  for (let k = 0; k <= s1.length - n; k++) map[s1.substring(k, k + n)] = true;
+  for (let k = 0; k <= s1.length - n; k++) map.push(s1.substring(k, k + n));
   return map;
 };
 
 const searchIngredient = async (input: string) => {
-  const searchConstraints = Object.keys(triGram(input)).map((name) => where(name, "==", true));
+  try {
+    const searchConstraints = where(
+      "searchWords",
+      "array-contains-any",
+      generateSearchWords(input)
+    );
 
-  const q = query(ingredientsRef, ...searchConstraints, limit(10));
-  const querySnapshot = await getDocs(q);
+    const q = query(ingredientsRef, searchConstraints, limit(10));
+    const querySnapshot = await getDocs(q);
 
-  const results: IIngredient[] = [];
-  querySnapshot.forEach((doc) => results.push({ id: doc.id, ...doc.data() }));
-  return results;
+    const results: IIngredient[] = [];
+    querySnapshot.forEach((doc) => results.push({ id: doc.id, ...doc.data() }));
+    console.log({ results });
+    return results;
+  } catch (error) {
+    console.log({ error });
+    return [];
+  }
 };
 
 const addIngredient = async (ingredient: IIngredient) => {
-  const id = generateId();
-  const payload = {
-    ...document,
-    ...triGram([ingredient.name || ""].join(" ").slice(0, 500)),
-  };
+  try {
+    const id = generateId();
+    const payload = {
+      ...ingredient,
+      id,
+      searchWords: generateSearchWords([ingredient.name || ""].join(" ").slice(0, 500)),
+    };
 
-  const postRef = doc(db, "Ingredients", id);
-  await setDoc(postRef, payload);
+    const postRef = doc(db, "Ingredients", id);
+    return await setDoc(postRef, payload);
+  } catch (error) {
+    console.log({ error });
+    return Promise.reject(error);
+  }
 };
 
 const saveRecipe = async (recipe: IRecipe) => {
-  const id = generateId();
-  const payload = {
-    ...recipe,
-    ...triGram([recipe.name || ""].join(" ").slice(0, 500)),
-  };
+  try {
+    const id = generateId();
+    const payload = {
+      ...recipe,
+      id,
+      searchWords: generateSearchWords([recipe.name || ""].join(" ").slice(0, 500)),
+    };
 
-  const postRef = doc(db, "Recipes", id);
-  await setDoc(postRef, payload);
+    const postRef = doc(db, "Recipes", id);
+    return await setDoc(postRef, payload);
+  } catch (error) {
+    console.log({ error });
+    return Promise.reject(error);
+  }
 };
 
 export const fb = {

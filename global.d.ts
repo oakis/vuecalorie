@@ -1,8 +1,12 @@
+interface ISearchWords {
+  [key: string | number | symbol]: unknown;
+}
+
 interface IIngredient {
   id: string;
   name?: string;
   kcal?: number;
-  [key: string | number | symbol]: unknown;
+  searchWords?: ISearchWords;
 }
 
 interface IRecipe {
@@ -10,6 +14,7 @@ interface IRecipe {
   name: string;
   ingredients: string[];
   createdBy: string;
+  searchWords?: ISearchWords;
 }
 
 type IconType = string[];
