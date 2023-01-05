@@ -1,7 +1,4 @@
 <script lang="ts">
-import AutoComplete from './shared/AutoComplete.vue';
-import Recipe from './shared/Recipe.vue';
-import { loadRecipe } from './helpers';
 import { useFirebaseAuth } from 'vuefire';
 import {
   GoogleAuthProvider,
@@ -10,27 +7,20 @@ import {
   onAuthStateChanged
 } from 'firebase/auth';
 import Page from './shared/Page.vue';
-import { fb } from '@/firebase';
-import Icon from './shared/Icon.vue';
 import { defineComponent } from 'vue';
+import { useRoute } from 'vue-router';
 
 export default defineComponent({
   name: 'UserComponent',
   components: {
-    AutoComplete,
-    Recipe,
-    Page,
-    Icon
-},
+    Page
+  },
   data: function() {
+    const route = useRoute();
     return {
-      foundIngredients: [] as IIngredient[],
-      ingredients: [] as IIngredient[],
-      recipeNameInputValue: "",
       user: null as User | null,
-      userRecipes: [] as IRecipe[],
-      selectedRecipe: {} as IRecipe,
-      ingredientInputValue: ""
+      tabColor: '#6e93d6',
+      currentTab: route.name
     };
   },
   mounted: function() {
@@ -39,18 +29,11 @@ export default defineComponent({
       this.user = user;
     })
   },
+  updated() {
+    const route = useRoute();
+    this.currentTab = route.name;
+  },
   methods: {
-    async loadRecipe(id: string) {
-      this.selectedRecipe = await loadRecipe(id)
-    },
-
-    // async getUserRecipes() {
-    //   const { data } = await axios
-    //     .get(`http://localhost:4000/recipes/search/${this.user._id}`)
-    //     .catch((err) => ({ data: err }));
-    //   this.$emit('userRecipes', data);
-    // },
-
     async registerUserWithGoogle() {
       const auth = useFirebaseAuth();
       const provider = new GoogleAuthProvider();
@@ -63,49 +46,7 @@ export default defineComponent({
         console.error(error);
       }
     },
-
-    addIngredient(id: string) {
-      const ingredientToAdd = this.foundIngredients.find(
-        (ingredient) => {
-          return ingredient.id === id
-        }
-      );
-      if (ingredientToAdd) {
-        const newIngredients = [...this.ingredients, ingredientToAdd];
-        this.ingredients = newIngredients;
-      }
-      this.foundIngredients = [];
-    },
-
-    async searchIngredient(inputValue: string) {
-      try {
-        const data = await fb.searchIngredient(inputValue);
-        this.foundIngredients = data;
-      } catch (error) {
-        this.foundIngredients = [];
-      }
-    },
-
-    async createIngredient() {
-      fb.addIngredient({ id: 'undefined', name: this.ingredientInputValue.toLowerCase() }).then(() => {
-        this.ingredientInputValue = "";
-        alert('Ingrediens tillagd')
-      })
-    },
-
-    async saveRecipe() {
-      fb.saveRecipe({
-        id: 'undefined',
-        name: this.recipeNameInputValue,
-        ingredients: this.ingredients.map((obj) => obj.id),
-        createdBy: this.user?.uid ? this.user.uid : 'unknown',
-      }).then(() => {
-        this.ingredients = [];
-        this.recipeNameInputValue = '';
-        alert('Recept tillagt')
-      })
-    },
-  },
+  }
 });
 </script>
 
@@ -116,62 +57,24 @@ export default defineComponent({
       id="user"
     >
       <h2>{{ user.displayName }} ({{ user.email }})</h2>
-      <AutoComplete
-        placeholder="Hitta ingrediens"
-        :items="foundIngredients"
-        @on-input="searchIngredient($event)"
-        @on-click="addIngredient($event)"
-      />
-      <div
-        v-if="ingredients"
-        id="create-recipe"
-      >
-        <h3>Ingredienser:</h3>
-        <ul>
-          <li
-            v-for="item in ingredients"
-            :key="item.id"
-          >
-            {{ item.name }}
-          </li>
-        </ul>
-        <input
-          v-model="recipeNameInputValue"
-          placeholder="Ge ditt recept ett namn"
-        >
-        <button @click="saveRecipe">
-          Spara recept
-        </button>
+      <div class="tabs">
+        <router-link to="profile">
+          <button :class="{ active: currentTab === 'profile', tab: true }">
+            Profil
+          </button>
+        </router-link>
+        <router-link to="recipes">
+          <button :class="{ active: currentTab === 'recipes', tab: true }">
+            Recept
+          </button>
+        </router-link>
+        <router-link to="admin">
+          <button :class="{ active: currentTab === 'admin', tab: true }">
+            Admin
+          </button>
+        </router-link>
       </div>
-      <div
-        v-if="userRecipes.length"
-        id="user-recipes"
-      >
-        <h3>Dina recept:</h3>
-        <ul>
-          <li
-            v-for="item in userRecipes"
-            :key="item.id"
-            @click="loadRecipe(item.id)"
-          >
-            {{ item.name }}
-          </li>
-        </ul>
-        <Recipe
-          v-if="selectedRecipe !== null"
-          :recipe="selectedRecipe"
-        />
-      </div>
-      <input
-        v-model="ingredientInputValue"
-        placeholder="Lägg till ingrediens"
-      >
-      <button @click="createIngredient">
-        Spara ingrediens <Icon
-          icon="fa-solid fa-plus"
-          color="#fff"
-        />
-      </button>
+      <router-view :user="user" />
     </div>
     <div
       v-else
@@ -203,6 +106,18 @@ export default defineComponent({
   ul {
     margin: 0;
     padding-left: 20px;
+  }
+
+  .tabs {
+    margin-bottom: 1.5em;
+    .tab {
+      background-color: var(--secondary-background);
+      color: var(--secondary-font-color);
+    }
+    .active {
+      background-color: #6e93d6;
+      color: var(--white);
+    }
   }
 }
 
