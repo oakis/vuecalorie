@@ -1,40 +1,13 @@
 <script lang="ts">
 import HeaderComponent from "./components/Header.vue";
 import FooterComponent from "./components/Footer.vue";
-import About from "./components/About.vue";
-import Start from "./components/Start.vue";
-import User from "./components/User.vue";
-import FindRecipe from "./components/FindRecipe.vue";
 import { defineComponent } from "vue";
 
-const routes = {
-  "/": Start,
-  "/recipe": FindRecipe,
-  "/user": User,
-  "/about": About,
-};
 
 export default defineComponent({
   components: {
     HeaderComponent,
     FooterComponent,
-},
-  data() {
-    return {
-      currentPath: window.location.hash,
-    };
-  },
-  computed: {
-    currentView(): string {
-      // @ts-ignore
-      return routes[this.currentPath.slice(1) || "/"];
-    },
-  },
-  mounted() {
-    window.addEventListener("hashchange", () => {
-      // @ts-ignore
-      this.currentPath = window.location.hash;
-    });
   },
 });
 </script>
@@ -43,13 +16,27 @@ export default defineComponent({
   <div>
     <HeaderComponent />
     <main>
-      <component :is="currentView" />
+      <router-view />
     </main>
     <FooterComponent />
   </div>
 </template>
 
 <style lang="scss">
+:root {
+  --primary-color: #6e93d6;
+  --primary-shadow: #3d5a8f;
+  --primary-background: #f5f5f5;
+  --primary-font-color: #333;
+
+  --secondary-color: #f5f5f5;
+  --secondary-shadow: #f5f5f5;
+  --secondary-background: #f5f5f5;
+  --secondary-font-color: #333;
+
+  --white: #fff;
+}
+
 h1,
 h2,
 h3,
@@ -61,7 +48,7 @@ a,
 span,
 li {
   font-family: "Roboto", sans-serif;
-  color: #333;
+  color: var(--primary-font-color);
 }
 
 html,
@@ -69,7 +56,7 @@ body {
   font-size: 1.1em;
   margin: 0;
   padding: 0;
-  background-color: #f5f5f5;
+  background-color: var(--primary-background);
 }
 
 #app {
@@ -84,14 +71,13 @@ body {
     padding: 10px;
     border: 0;
     border-radius: 5px;
-    box-shadow: 1px 1px 0.2em #333;
+    box-shadow: 1px 1px 0.2em var(--primary-shadow);
     outline: none;
   }
 
   button {
-    color: #fff;
-    background-color: #6e93d6;
-    box-shadow: 2px 2px 0.1em #3d5a8f;
+    color: var(--white);
+    background-color: var(--primary-color);
     padding: 10px 20px;
     cursor: pointer;
   }

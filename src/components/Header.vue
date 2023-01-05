@@ -10,12 +10,17 @@
         </h1>
       </a>
       <nav>
-        <a href="#/recipe">Hitta recept</a>
-        <a href="#/about">Om</a>
-        <a href="#/user">
+        <router-link to="/recipe">
+          Hitta recept
+        </router-link>
+        <router-link to="/about">
+          Om
+        </router-link>
+        <router-link to="/user/profile">
           <Icon
             icon="fa-solid fa-user"
-          /></a>
+          />
+        </router-link>
       </nav>
     </header>
   </Page>
