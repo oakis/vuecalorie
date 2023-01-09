@@ -1,15 +1,15 @@
 <template>
   <div v-if="recipe && recipe.name">
-    <h2>{{ recipe.name }}</h2>
+    <h2>{{ capitalize(recipe.name) }}</h2>
     <div class="recipe-wrapper">
       <div class="recipe-ingredients">
         <h4>Ingredienser</h4>
         <ul>
           <li
             v-for="item in recipe.ingredients"
-            :key="item._id"
+            :key="item.id"
           >
-            {{ item.name }}
+            {{ capitalize(item.name) }}
           </li>
         </ul>
       </div>
@@ -22,6 +22,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import {capitalize} from '../../helpers'
 
 export default defineComponent({
   name: "RecipeView",
@@ -34,6 +35,9 @@ export default defineComponent({
       }),
     },
   },
+  setup() {
+    return { capitalize }
+  }
 });
 </script>
 

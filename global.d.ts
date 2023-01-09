@@ -15,4 +15,8 @@ interface IRecipe {
   searchWords?: ISearchWords;
 }
 
+interface IFullRecipe extends Omit<IRecipe, 'ingredients'> {
+  ingredients: IIngredient[];
+}
+
 type IconType = string[];

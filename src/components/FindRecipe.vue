@@ -12,12 +12,11 @@
 </template>
 
 <script lang="ts">
-import axios from "axios";
 import AutoComplete from "./shared/AutoComplete.vue";
 import Recipe from "./shared/Recipe.vue";
-import { loadRecipe } from "./helpers";
 import Page from "./shared/Page.vue";
 import { defineComponent } from "vue";
+import { fb } from "@/firebase";
 
 export default defineComponent({
   components: {
@@ -28,22 +27,21 @@ export default defineComponent({
   data: function() {
     return {
       foundRecipes: [] as IRecipe[],
-      recipe: {} as IRecipe
+      recipe: {} as IFullRecipe
     }
   },
   methods: {
     async loadRecipe(id: string) {
-      this.$emit("recipe", await loadRecipe(id));
-      this.$emit("foundRecipes", []);
+      const found = this.foundRecipes.find(recipe => recipe.id === id);
+      if (found) {
+        const ingredients: IIngredient[] = await Promise.all(found.ingredients.map(async (id: string) => await fb.getIngredientById(id)))
+        this.recipe = { ...found, ingredients };
+      }
+      this.foundRecipes = [];
     },
 
     async searchRecipe(inputValue: string) {
-      const { data } = await axios
-        .post("http://localhost:4000/recipes/search", {
-          search: inputValue,
-        })
-        .catch((err) => err);
-      this.$emit("foundRecipes", data);
+      this.foundRecipes = await fb.searchRecipe(inputValue);
     },
   },
 });
