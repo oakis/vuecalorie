@@ -5,10 +5,10 @@ import {
   getDoc,
   getDocs,
   getFirestore,
-  limit,
   query,
   setDoc,
   where,
+  CollectionReference,
 } from "firebase/firestore";
 
 export const firebaseApp = initializeApp({
@@ -25,6 +25,27 @@ const db = getFirestore(firebaseApp);
 
 const recipeRef = collection(db, "Recipes");
 const ingredientsRef = collection(db, "Ingredients");
+
+async function getContentById(ref: CollectionReference, document: string, searchWords: string[]) {
+  if (!ref || !document || !searchWords || !searchWords.length) return [];
+
+  const batches = [];
+
+  while (searchWords.length) {
+    const batch = searchWords.splice(0, 10);
+
+    const q = query(ref, where(document, "array-contains-any", [...batch]));
+    const querySnapshot = await getDocs(q);
+
+    batches.push(querySnapshot.docs);
+  }
+
+  return Promise.all(batches).then((content) =>
+    content
+      .flat()
+      .filter((value, index, self) => index === self.findIndex((t) => t.id === value.id))
+  );
+}
 
 const GENERATION_OFFSET = new Date("5000-01-01").getTime();
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -53,10 +74,7 @@ const searchIngredient = async (input: string) => {
 
     if (!searchWords.length) return [];
 
-    const searchConstraints = where("searchWords", "array-contains-any", searchWords);
-
-    const q = query(ingredientsRef, searchConstraints, limit(10));
-    const querySnapshot = await getDocs(q);
+    const querySnapshot = await getContentById(ingredientsRef, "searchWords", searchWords);
 
     const results: IIngredient[] = [];
     querySnapshot.forEach((doc) =>
@@ -123,10 +141,7 @@ const searchRecipe = async (input: string) => {
 
     if (!searchWords.length) return [];
 
-    const searchConstraints = where("searchWords", "array-contains-any", searchWords);
-
-    const q = query(recipeRef, searchConstraints, limit(10));
-    const querySnapshot = await getDocs(q);
+    const querySnapshot = await getContentById(recipeRef, "searchWords", searchWords);
 
     const results: IRecipe[] = [];
     querySnapshot.forEach((doc) =>
@@ -160,7 +175,6 @@ const getUserRecipes = async (uid: string) => {
         createdBy: doc.data().createdBy,
       })
     );
-    console.log({ results });
     return results;
   } catch (error) {
     console.log({ error });
