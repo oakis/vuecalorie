@@ -169,10 +169,12 @@ const getUserRecipes = async (uid: string) => {
 };
 
 export const fb = {
+  /** Ingredients */
   searchIngredient,
   addIngredient,
+  getIngredientById,
+  /** Recipes */
   saveRecipe,
   searchRecipe,
-  getIngredientById,
   getUserRecipes,
 };
