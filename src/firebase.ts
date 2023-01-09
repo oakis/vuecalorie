@@ -110,7 +110,6 @@ const getIngredientById = async (id: string) => {
     const d = doc(db, "Ingredients", id);
     const querySnapshot = await getDoc(d);
     const ingredient = querySnapshot.data() as IIngredient;
-    console.log("getIngredientById", { ingredient });
     return { ...ingredient, id: ingredient.id, name: ingredient.name };
   } catch (error) {
     console.log({ error });
@@ -139,7 +138,29 @@ const searchRecipe = async (input: string) => {
         createdBy: doc.data().createdBy,
       })
     );
-    console.log("searchRecipe", { results });
+    return results;
+  } catch (error) {
+    console.log({ error });
+    return [];
+  }
+};
+
+const getUserRecipes = async (uid: string) => {
+  try {
+    const q = query(recipeRef, where("createdBy", "==", uid));
+    const querySnapshot = await getDocs(q);
+
+    const results: IRecipe[] = [];
+    querySnapshot.forEach((doc) =>
+      results.push({
+        ...doc.data(),
+        id: doc.id,
+        name: doc.data().name,
+        ingredients: doc.data().ingredients,
+        createdBy: doc.data().createdBy,
+      })
+    );
+    console.log({ results });
     return results;
   } catch (error) {
     console.log({ error });
@@ -153,4 +174,5 @@ export const fb = {
   saveRecipe,
   searchRecipe,
   getIngredientById,
+  getUserRecipes,
 };

@@ -68,18 +68,12 @@ export default defineComponent({
       li {
         &::before {
           content: "\2022";
-          /* Add content: \2022 is the CSS Code/unicode for a bullet */
           color: #6e93d6;
-          /* Change the color */
           font-size: 1.1em;
           font-weight: bold;
-          /* If you want it to be bold */
           display: inline-block;
-          /* Needed to add space between the bullet and the text */
-          width: 10px;
-          /* Also needed for space (tweak if needed) */
+          width: 0.7em;
           margin-left: -1em;
-          /* Also needed for space (tweak if needed) */
         }
       }
     }
