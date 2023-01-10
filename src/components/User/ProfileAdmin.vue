@@ -11,6 +11,11 @@ const getNumber = (num: unknown): number | null => {
     return null;
 }
 
+interface IExtra {
+  label: string;
+  value: number;
+}
+
 export default defineComponent({
     name: "ProfileAdmin",
     components: { Icon },
@@ -21,7 +26,7 @@ export default defineComponent({
             carbs: null,
             fat: null,
             protein: null,
-            extras: []
+            extras: [] as IExtra[]
         };
     },
     methods: {
@@ -41,18 +46,22 @@ export default defineComponent({
             carbs: getNumber(this.carbs),
             fat: getNumber(this.fat),
             protein: getNumber(this.protein),
-            extras: this.extras
+            ...this.extras.map(extra => ({ label: extra.label.toLowerCase(), value: extra.value} )).reduce((obj, item) => ({...obj, [item.label]: item.value}) ,{})
           }).then(() => {
               this.resetInputs();
               alert("Ingrediens tillagd");
           });
       },
+      addExtra() {
+        this.extras.push({ label: '', value: 0 })
+      }
     }
 });
 </script>
 
 <template>
   <div>
+    <h3>Info</h3>
     <div class="row">
       <label
         for="name"
@@ -96,8 +105,34 @@ export default defineComponent({
         type="number"
       >
     </div>
+    <h3>Extra</h3>
+    <div
+      v-for="(extra, index) in extras"
+      :key="`extras-${index}`"
+      class="row"
+    >
+      <input
+        v-model="extra.label"
+        type="text"
+      >
+      <input
+        v-model="extra.value"
+        type="number"
+      >
+    </div>
+    <button @click="addExtra">
+      Lägg till extra <Icon
+        icon="fa-solid fa-plus"
+        color="#fff"
+      />
+    </button>
+    <div class="spacer" />
     <div class="row">
-      <button @click="createIngredient">
+      <button
+        :disabled="name.length < 2"
+        :class="{ disabled: name.length < 2 }"
+        @click="createIngredient"
+      >
         Spara ingrediens <Icon
           icon="fa-solid fa-plus"
           color="#fff"
@@ -108,17 +143,27 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
-.row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+#app {
+  .row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 0.5em;
 
-  label {
-    width: 6em;
+    label {
+      width: 6em;
+    }
   }
-}
-.required::after {
-  content: ' *';
-  color: red;
+  .required::after {
+    content: ' *';
+    color: red;
+  }
+  .spacer {
+    padding: 1em;
+  }
+
+  button.disabled {
+    opacity: 0.5;
+  }
 }
 </style>
