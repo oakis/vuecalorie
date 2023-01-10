@@ -46,6 +46,7 @@ h6,
 p,
 a,
 span,
+label,
 li {
   font-family: "Roboto", sans-serif;
   color: var(--primary-font-color);
