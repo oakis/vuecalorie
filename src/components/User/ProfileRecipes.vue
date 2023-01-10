@@ -54,7 +54,6 @@ import { defineComponent } from 'vue';
 import AutoComplete from '../shared/AutoComplete.vue';
 import Recipe from '../shared/Recipe.vue';
 import { fb } from '@/firebase';
-// import User from '../../models/User'
 import { User } from "firebase/auth";
 
 export default defineComponent({
@@ -66,7 +65,7 @@ export default defineComponent({
         type: Object as () => User
       }
     },
-    data: function() {
+    data() {
       return {
         foundIngredients: [] as IIngredient[],
         ingredients: [] as IIngredient[],
@@ -75,6 +74,9 @@ export default defineComponent({
         selectedRecipe: {} as IRecipe,
         ingredientInputValue: ""
       };
+    },
+    async mounted() {
+      this.userRecipes = await fb.getUserRecipes(this.user.uid);
     },
     methods: {
       async searchIngredient(inputValue: string) {

@@ -2,12 +2,13 @@ import { initializeApp } from "firebase/app";
 import {
   collection,
   doc,
+  getDoc,
   getDocs,
   getFirestore,
-  limit,
   query,
   setDoc,
   where,
+  CollectionReference,
 } from "firebase/firestore";
 
 export const firebaseApp = initializeApp({
@@ -24,6 +25,27 @@ const db = getFirestore(firebaseApp);
 
 const recipeRef = collection(db, "Recipes");
 const ingredientsRef = collection(db, "Ingredients");
+
+async function getContentById(ref: CollectionReference, document: string, searchWords: string[]) {
+  if (!ref || !document || !searchWords || !searchWords.length) return [];
+
+  const batches = [];
+
+  while (searchWords.length) {
+    const batch = searchWords.splice(0, 10);
+
+    const q = query(ref, where(document, "array-contains-any", [...batch]));
+    const querySnapshot = await getDocs(q);
+
+    batches.push(querySnapshot.docs);
+  }
+
+  return Promise.all(batches).then((content) =>
+    content
+      .flat()
+      .filter((value, index, self) => index === self.findIndex((t) => t.id === value.id))
+  );
+}
 
 const GENERATION_OFFSET = new Date("5000-01-01").getTime();
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -52,13 +74,12 @@ const searchIngredient = async (input: string) => {
 
     if (!searchWords.length) return [];
 
-    const searchConstraints = where("searchWords", "array-contains-any", searchWords);
-
-    const q = query(ingredientsRef, searchConstraints, limit(10));
-    const querySnapshot = await getDocs(q);
+    const querySnapshot = await getContentById(ingredientsRef, "searchWords", searchWords);
 
     const results: IIngredient[] = [];
-    querySnapshot.forEach((doc) => results.push({ id: doc.id, name: doc.data().name, ...doc.data() }));
+    querySnapshot.forEach((doc) =>
+      results.push({ id: doc.id, name: doc.data().name, ...doc.data() })
+    );
     return results;
   } catch (error) {
     console.log({ error });
@@ -102,8 +123,72 @@ const saveRecipe = async (recipe: IRecipe) => {
   }
 };
 
+const getIngredientById = async (id: string) => {
+  try {
+    const d = doc(db, "Ingredients", id);
+    const querySnapshot = await getDoc(d);
+    const ingredient = querySnapshot.data() as IIngredient;
+    return { ...ingredient, id: ingredient.id, name: ingredient.name };
+  } catch (error) {
+    console.log({ error });
+    return { id: "error", name: "error" };
+  }
+};
+
+const searchRecipe = async (input: string) => {
+  try {
+    const searchWords = generateSearchWords(input);
+
+    if (!searchWords.length) return [];
+
+    const querySnapshot = await getContentById(recipeRef, "searchWords", searchWords);
+
+    const results: IRecipe[] = [];
+    querySnapshot.forEach((doc) =>
+      results.push({
+        ...doc.data(),
+        id: doc.id,
+        name: doc.data().name,
+        ingredients: doc.data().ingredients,
+        createdBy: doc.data().createdBy,
+      })
+    );
+    return results;
+  } catch (error) {
+    console.log({ error });
+    return [];
+  }
+};
+
+const getUserRecipes = async (uid: string) => {
+  try {
+    const q = query(recipeRef, where("createdBy", "==", uid));
+    const querySnapshot = await getDocs(q);
+
+    const results: IRecipe[] = [];
+    querySnapshot.forEach((doc) =>
+      results.push({
+        ...doc.data(),
+        id: doc.id,
+        name: doc.data().name,
+        ingredients: doc.data().ingredients,
+        createdBy: doc.data().createdBy,
+      })
+    );
+    return results;
+  } catch (error) {
+    console.log({ error });
+    return [];
+  }
+};
+
 export const fb = {
+  /** Ingredients */
   searchIngredient,
   addIngredient,
+  getIngredientById,
+  /** Recipes */
   saveRecipe,
+  searchRecipe,
+  getUserRecipes,
 };
