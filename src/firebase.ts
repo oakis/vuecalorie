@@ -127,11 +127,17 @@ const getIngredientById = async (id: string) => {
   try {
     const d = doc(db, "Ingredients", id);
     const querySnapshot = await getDoc(d);
-    const ingredient = querySnapshot.data() as IIngredient;
-    return { ...ingredient, id: ingredient.id, name: ingredient.name };
+    const ingredient = querySnapshot.data() as IRecipeIngredient;
+    return {
+      ...ingredient,
+      id: ingredient.id,
+      name: ingredient.name,
+      measure: ingredient.measure,
+      volume: ingredient.volume,
+    };
   } catch (error) {
     console.log({ error });
-    return { id: "error", name: "error" };
+    return { id: "error", name: "error", measure: 'error', volume: 0 };
   }
 };
 

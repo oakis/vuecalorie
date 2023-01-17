@@ -15,16 +15,17 @@ interface IIngredient {
   searchWords?: ISearchWords;
 }
 
+interface IRecipeIngredient extends IIngredient {
+  measure: string;
+  volume: number;
+}
+
 interface IRecipe {
   id: string;
   name: string;
-  ingredients: string[];
+  ingredients: IRecipeIngredient[];
   createdBy: string;
   searchWords?: ISearchWords;
-}
-
-interface IFullRecipe extends Omit<IRecipe, 'ingredients'> {
-  ingredients: IIngredient[];
 }
 
 type IconType = string[];

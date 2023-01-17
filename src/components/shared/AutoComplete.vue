@@ -17,12 +17,22 @@
             :key="item.name"
             @click="onClick(item.id)"
           >
-            <Icon
-              class="list-icon"
-              icon="fa-solid fa-image"
-              size="3x"
-            />
-            <span>{{ item.name }}</span>
+            <div class="left">
+              <Icon
+                class="list-icon"
+                icon="fa-solid fa-image"
+                size="3x"
+              />
+              <span>{{ item.name }}</span>
+            </div>
+            <div
+              v-if="typeof itemIcon === 'string'"
+              class="icon-wrapper"
+            >
+              <Icon
+                :icon="'fa-solid fa-' + itemIcon"
+              />
+            </div>
           </li>
         </ul>
         <ul v-else>
@@ -37,6 +47,7 @@
   interface IProps {
     items: IListItem[];
     placeholder?: string;
+    itemIcon?: string;
   }
 
   interface IListItem {
@@ -122,6 +133,7 @@ export default defineComponent({
         padding: 10px;
         display: flex;
         align-items: center;
+        justify-content: space-between;
 
         &:hover {
           background-color: rgba(#3d5a8f, 0.1);
@@ -132,6 +144,22 @@ export default defineComponent({
           left: 0;
           top: 0;
           margin-right: 10px;
+        }
+
+        .left, .icon-wrapper {
+          position: relative;
+          display: flex;
+          align-items: center;
+        }
+
+        .icon-wrapper {
+          width: 1em;
+          height: 100%;
+          svg {
+            position: relative;
+            left: 0;
+            top: 0;
+          }
         }
       }
     }

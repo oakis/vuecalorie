@@ -66,7 +66,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   input,
-  button {
+  button,
+  select {
     font-size: 1em;
     margin: 0 0.5em 0 0;
     padding: 10px;

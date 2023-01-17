@@ -27,14 +27,14 @@ export default defineComponent({
   data: function() {
     return {
       foundRecipes: [] as IRecipe[],
-      recipe: {} as IFullRecipe
+      recipe: {} as IRecipe
     }
   },
   methods: {
     async loadRecipe(id: string) {
       const found = this.foundRecipes.find(recipe => recipe.id === id);
       if (found) {
-        const ingredients: IIngredient[] = await Promise.all(found.ingredients.map(async (id: string) => await fb.getIngredientById(id)))
+        const ingredients: IRecipeIngredient[] = await Promise.all(found.ingredients.map(async (ingredient: IRecipeIngredient) => await fb.getIngredientById(ingredient.id)))
         this.recipe = { ...found, ingredients };
       }
       this.foundRecipes = [];
