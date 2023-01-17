@@ -46,6 +46,7 @@ h6,
 p,
 a,
 span,
+label,
 li {
   font-family: "Roboto", sans-serif;
   color: var(--primary-font-color);
@@ -67,7 +68,7 @@ body {
   input,
   button {
     font-size: 1em;
-    margin: 4px;
+    margin: 0 0.5em 0 0;
     padding: 10px;
     border: 0;
     border-radius: 5px;

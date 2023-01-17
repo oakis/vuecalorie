@@ -26,7 +26,7 @@ const db = getFirestore(firebaseApp);
 const recipeRef = collection(db, "Recipes");
 const ingredientsRef = collection(db, "Ingredients");
 
-async function getContentById(ref: CollectionReference, document: string, searchWords: string[]) {
+async function getContentByBatch(ref: CollectionReference, document: string, searchWords: string[]) {
   if (!ref || !document || !searchWords || !searchWords.length) return [];
 
   const batches = [];
@@ -74,7 +74,7 @@ const searchIngredient = async (input: string) => {
 
     if (!searchWords.length) return [];
 
-    const querySnapshot = await getContentById(ingredientsRef, "searchWords", searchWords);
+    const querySnapshot = await getContentByBatch(ingredientsRef, "searchWords", searchWords);
 
     const results: IIngredient[] = [];
     querySnapshot.forEach((doc) =>
@@ -141,7 +141,7 @@ const searchRecipe = async (input: string) => {
 
     if (!searchWords.length) return [];
 
-    const querySnapshot = await getContentById(recipeRef, "searchWords", searchWords);
+    const querySnapshot = await getContentByBatch(recipeRef, "searchWords", searchWords);
 
     const results: IRecipe[] = [];
     querySnapshot.forEach((doc) =>
