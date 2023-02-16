@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { fb } from '@/firebase';
 import Icon from '../shared/Icon.vue';
+import { doFetch } from '@/helpers/fetch';
 
 /** Returns null if not a number */
 const getNumber = (num: unknown): number | null => {
@@ -22,35 +22,44 @@ export default defineComponent({
     data() {
         return {
             name: "",
-            kcal: null,
-            carbs: null,
-            fat: null,
-            protein: null,
+            kcal: 0,
+            carbs: 0,
+            fat: 0,
+            protein: 0,
             extras: [] as IExtra[]
         };
     },
     methods: {
       resetInputs() {
         this.name = '';
-        this.kcal = null;
-        this.carbs = null;
-        this.fat = null;
-        this.protein = null;
+        this.kcal = 0;
+        this.carbs = 0;
+        this.fat = 0;
+        this.protein = 0;
         this.extras = [];
       },
       async createIngredient() {
-          fb.addIngredient({
-            id: "null",
-            name: this.name.toLowerCase(),
-            kcal: getNumber(this.kcal),
-            carbs: getNumber(this.carbs),
-            fat: getNumber(this.fat),
-            protein: getNumber(this.protein),
-            ...this.extras.map(extra => ({ label: extra.label.toLowerCase(), value: extra.value} )).reduce((obj, item) => ({...obj, [item.label]: item.value}) ,{})
-          }).then(() => {
-              this.resetInputs();
-              alert("Ingrediens tillagd");
+        try {
+          doFetch('Ingredients', {
+            method: 'POST',
+            body: JSON.stringify({
+              name: this.name.toLowerCase(),
+              kcal: getNumber(this.kcal),
+              carbs: getNumber(this.carbs),
+              fat: getNumber(this.fat),
+              protein: getNumber(this.protein),
+              ...this.extras.map(extra => ({ label: extra.label.toLowerCase(), value: extra.value} )).reduce((obj, item) => ({...obj, [item.label]: item.value}) ,{})
+            })
+          })
+          .then((ingredient) => {
+            this.resetInputs();
+            console.log("Ingrediens tillagd", {ingredient});
+          }).catch((err) => {
+            throw err;
           });
+        } catch (error) {
+          console.error(error);
+        }
       },
       addExtra() {
         this.extras.push({ label: '', value: 0 })

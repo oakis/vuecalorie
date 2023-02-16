@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import {capitalize} from '../../helpers'
+import { capitalize } from '@/helpers/strings';
 
 export default defineComponent({
   name: "RecipeView",

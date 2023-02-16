@@ -1,11 +1,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import AutoComplete from '../shared/AutoComplete.vue';
-import Recipe from '../shared/Recipe.vue';
+import AutoComplete from '@/components/shared/AutoComplete.vue';
+import Recipe from '@/components/shared/Recipe.vue';
 import { fb } from '@/firebase';
 import { User } from "firebase/auth";
-import { capitalize } from '@/helpers';
-import MeasureSelect from '../shared/MeasureSelect.vue';
+import { capitalize } from '@/helpers/strings';
+import MeasureSelect from '@/components/shared/MeasureSelect.vue';
+import { doFetch } from '@/helpers/fetch';
 
 export default defineComponent({
     name: "ProfileRecipes",
@@ -17,8 +18,8 @@ export default defineComponent({
       }
     },
     setup() {
-    return { capitalize }
-  },
+      return { capitalize }
+    },
     data() {
       return {
         foundIngredients: [] as IIngredient[],
@@ -35,10 +36,17 @@ export default defineComponent({
     methods: {
       async searchIngredient(inputValue: string) {
         try {
-          const data = await fb.searchIngredient(inputValue);
-          this.foundIngredients = data;
+          doFetch(`Ingredients/${inputValue}`, {
+            method: 'POST',
+          })
+          .then((data) => {
+            this.foundIngredients = data;
+          }).catch((err) => {
+            this.foundIngredients = [];
+            throw err;
+          });
         } catch (error) {
-          this.foundIngredients = [];
+          console.error(error);
         }
       },
       addIngredient(id: string) {
