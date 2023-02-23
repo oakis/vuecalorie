@@ -21,6 +21,7 @@ interface IRecipe {
   id: string;
   name: string;
   ingredients: IRecipeIngredient[];
+  instructions?: unknown[];
   createdBy: string;
 }
 

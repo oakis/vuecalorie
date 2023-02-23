@@ -2,7 +2,6 @@
 import { defineComponent } from 'vue';
 import AutoComplete from '@/components/shared/AutoComplete.vue';
 import Recipe from '@/components/shared/Recipe.vue';
-import { fb } from '@/firebase';
 import { User } from "firebase/auth";
 import { capitalize } from '@/helpers/strings';
 import MeasureSelect from '@/components/shared/MeasureSelect.vue';
@@ -31,7 +30,7 @@ export default defineComponent({
       };
     },
     async mounted() {
-      this.userRecipes = await fb.getUserRecipes(this.user.uid);
+      // this.userRecipes = await fb.getUserRecipes(this.user.uid);
     },
     methods: {
       async searchIngredient(inputValue: string) {
@@ -64,16 +63,23 @@ export default defineComponent({
       updateIngredientMeasure() {},
       updateIngredientVolume() {},
       async saveRecipe() {
-        fb.saveRecipe({
-          id: 'undefined',
+        try {
+        doFetch('Recipes', {method: 'POST', body: JSON.stringify({
           name: this.recipeNameInputValue,
           ingredients: this.ingredients.map(({ name, id, measure, volume }) => ({ name, id, measure, volume })),
           createdBy: this.user?.uid ? this.user.uid : 'unknown',
-        }).then(() => {
+        })})
+        .then(() => {
           this.ingredients = [];
           this.recipeNameInputValue = '';
           alert('Recept tillagt')
-        })
+        }).catch((err) => {
+          throw err;
+        });
+      } catch (error) {
+        console.error(error);
+      }
+
       },
       async loadRecipe(id: string) {
         console.log('loadRecipe', id);

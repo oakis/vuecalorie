@@ -48,7 +48,7 @@ export default defineComponent({
               carbs: getNumber(this.carbs),
               fat: getNumber(this.fat),
               protein: getNumber(this.protein),
-              ...this.extras.map(extra => ({ label: extra.label.toLowerCase(), value: extra.value} )).reduce((obj, item) => ({...obj, [item.label]: item.value}) ,{})
+              extras: this.extras.map(extra => ({ label: extra.label.toLowerCase(), value: extra.value} )).reduce((obj, item) => ({...obj, [item.label]: item.value}), {})
             })
           })
           .then((ingredient) => {
