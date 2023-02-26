@@ -30,7 +30,7 @@ export default defineComponent({
       };
     },
     async mounted() {
-      // this.userRecipes = await fb.getUserRecipes(this.user.uid);
+      this.getUserRecipes();
     },
     methods: {
       async searchIngredient(inputValue: string) {
@@ -84,6 +84,19 @@ export default defineComponent({
       async loadRecipe(id: string) {
         console.log('loadRecipe', id);
       },
+      getUserRecipes() {
+        try {
+          doFetch(`Recipes/user/${this.user.uid}`)
+          .then((data) => {
+            this.userRecipes = data;
+          }).catch((err) => {
+            this.userRecipes = [];
+            throw err;
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      }
     }
 });
 </script>
