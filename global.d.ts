@@ -26,3 +26,8 @@ interface IRecipe {
 }
 
 type IconType = string[];
+
+interface IInstruction {
+  title: string;
+  text: string;
+}

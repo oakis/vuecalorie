@@ -6,10 +6,13 @@ import { User } from "firebase/auth";
 import { capitalize } from '@/helpers/strings';
 import MeasureSelect from '@/components/shared/MeasureSelect.vue';
 import { doFetch } from '@/helpers/fetch';
+import Icon from '../shared/Icon.vue';
+
+const emptyInstruction = { title: '', text: '' };
 
 export default defineComponent({
     name: "ProfileRecipes",
-    components: { AutoComplete, Recipe, MeasureSelect },
+    components: { AutoComplete, Recipe, MeasureSelect, Icon },
     props: {
       user: {
         required: true,
@@ -26,7 +29,8 @@ export default defineComponent({
         recipeNameInputValue: "",
         userRecipes: [] as IRecipe[],
         selectedRecipe: {} as IRecipe,
-        ingredientInputValue: ""
+        ingredientInputValue: "",
+        instructions: [emptyInstruction] as IInstruction[]
       };
     },
     async mounted() {
@@ -67,11 +71,13 @@ export default defineComponent({
         doFetch('Recipes', {method: 'POST', body: JSON.stringify({
           name: this.recipeNameInputValue,
           ingredients: this.ingredients.map(({ name, id, measure, volume }) => ({ name, id, measure, volume })),
+          instructions: this.instructions,
           createdBy: this.user?.uid ? this.user.uid : 'unknown',
         })})
         .then(() => {
           this.ingredients = [];
           this.recipeNameInputValue = '';
+          this.instructions = [emptyInstruction];
           alert('Recept tillagt')
         }).catch((err) => {
           throw err;
@@ -96,6 +102,9 @@ export default defineComponent({
         } catch (error) {
           console.error(error);
         }
+      },
+      addInstruction() {
+        this.instructions.push(emptyInstruction)
       }
     }
 });
@@ -113,6 +122,7 @@ export default defineComponent({
           @on-input="searchIngredient($event)"
           @on-click="addIngredient($event)"
         />
+        <hr class="divider">
         <div
           v-if="ingredients.length > 0"
           id="create-recipe"
@@ -137,18 +147,34 @@ export default defineComponent({
               </tr>
             </tbody>
           </table>
-          <!-- <ul>
-            <li
-              v-for="item in ingredients"
-              :key="item.id"
-            >
-              <input> <span>{{ capitalize(item.name) }}</span>
-            </li>
-          </ul> -->
         </div>
       </div>
       <div class="steps-wrapper">
-        <p>steg...</p>
+        <hr class="divider">
+        <h3>Steg:</h3>
+        <ol>
+          <li
+            v-for="(instruction, index) in instructions"
+            :key="`extras-${index}`"
+          >
+            <div class="instruction">
+              <input
+                v-model="instruction.title"
+                type="text"
+              >
+              <textarea
+                v-model="instruction.text"
+              />
+            </div>
+          </li>
+        </ol>
+        <div class="spacer" />
+        <button @click="addInstruction">
+          Lägg till steg <Icon
+            icon="fa-solid fa-plus"
+            color="#fff"
+          />
+        </button>
       </div>
     </div>
     <hr class="divider">
@@ -186,17 +212,25 @@ export default defineComponent({
 <style scoped lang="scss">
 .create-new-recipe {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 1.5em;
+}
+
+.steps-wrapper {
+  .instruction {
+    display: inline-flex;
+    justify-content: start;
+    align-items: flex-start;
+    width: 100%;
+    textarea {
+      width: 100%;
+    }
+  }
 }
 
 input {
   margin-left: 0!important;
 }
-
-.ingredients-wrapper{}
-
-.steps-wrapper{}
 
 .divider{
   height: 0px;

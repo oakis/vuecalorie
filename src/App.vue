@@ -67,7 +67,8 @@ body {
 
   input,
   button,
-  select {
+  select,
+  textarea {
     font-size: 1em;
     margin: 0 0.5em 0 0;
     padding: 10px;
@@ -102,6 +103,10 @@ body {
     input {
       padding-inline-start: 2em;
     }
+  }
+
+  .spacer {
+    padding: 1em;
   }
 }
 </style>

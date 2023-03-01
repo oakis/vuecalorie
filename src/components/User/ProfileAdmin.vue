@@ -167,9 +167,6 @@ export default defineComponent({
     content: ' *';
     color: red;
   }
-  .spacer {
-    padding: 1em;
-  }
 
   button.disabled {
     opacity: 0.5;
