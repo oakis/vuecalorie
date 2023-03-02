@@ -1,37 +1,33 @@
 <template>
-  <font-awesome-icon
-    :size="size"
-    :icon="icon"
-    class="icon"
-  />
+  <font-awesome-icon :size="size" :icon="icon" class="icon" />
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "CalorieIcon",
   props: {
     icon: {
       required: true,
-      type: String
+      type: String,
     },
     size: {
       required: false,
       type: String,
-      default: "1x"
+      default: "1x",
     },
     color: {
       required: false,
       type: String,
-      default: '#555'
-    }
+      default: "#555",
+    },
   },
 });
 </script>
 
 <style scoped lang="scss">
-  .icon {
-    color: v-bind(color);
-  }
+.icon {
+  color: v-bind(color);
+}
 </style>

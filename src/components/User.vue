@@ -9,8 +9,8 @@ export default defineComponent({
   name: "UserComponent",
   components: {
     Page,
-    TabView
-},
+    TabView,
+  },
   data: function () {
     return {
       user: null as User | null,

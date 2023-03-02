@@ -3,7 +3,6 @@ import HeaderComponent from "./components/Header.vue";
 import FooterComponent from "./components/Footer.vue";
 import { defineComponent } from "vue";
 
-
 export default defineComponent({
   components: {
     HeaderComponent,

@@ -22,23 +22,24 @@ export default defineComponent({
   components: {
     AutoComplete,
     Recipe,
-    Page
+    Page,
   },
-  data: function() {
+  data: function () {
     return {
       foundRecipes: [] as IRecipe[],
-      recipe: {} as IRecipe
-    }
+      recipe: {} as IRecipe,
+    };
   },
   methods: {
     async loadRecipe(id: string) {
       try {
         doFetch(`Recipes/${id}`)
-        .then((recipe) => {
-          this.recipe = recipe;
-        }).catch((err) => {
-          throw err;
-        });
+          .then((recipe) => {
+            this.recipe = recipe;
+          })
+          .catch((err) => {
+            throw err;
+          });
       } catch (error) {
         console.error(error);
       }
@@ -46,12 +47,13 @@ export default defineComponent({
 
     async searchRecipe(inputValue: string) {
       try {
-        doFetch(`Recipes/${inputValue}`, {method:'POST'})
-        .then((recipes) => {
-          this.foundRecipes = recipes;
-        }).catch((err) => {
-          throw err;
-        });
+        doFetch(`Recipes/${inputValue}`, { method: "POST" })
+          .then((recipes) => {
+            this.foundRecipes = recipes;
+          })
+          .catch((err) => {
+            throw err;
+          });
       } catch (error) {
         console.error(error);
       }

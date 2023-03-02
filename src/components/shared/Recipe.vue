@@ -5,10 +5,7 @@
       <div class="recipe-ingredients">
         <h4>Ingredienser</h4>
         <ul>
-          <li
-            v-for="item in recipe.ingredients"
-            :key="item.id"
-          >
+          <li v-for="item in recipe.ingredients" :key="item.id">
             {{ capitalize(item.name) }}
           </li>
         </ul>
@@ -21,8 +18,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { capitalize } from '@/helpers/strings';
+import { defineComponent } from "vue";
+import { capitalize } from "@/helpers/strings";
 
 export default defineComponent({
   name: "RecipeView",
@@ -36,8 +33,8 @@ export default defineComponent({
     },
   },
   setup() {
-    return { capitalize }
-  }
+    return { capitalize };
+  },
 });
 </script>
 

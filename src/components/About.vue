@@ -18,12 +18,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import Page from './shared/Page.vue';
+import { defineComponent } from "vue";
+import Page from "./shared/Page.vue";
 
 export default defineComponent({
-    name: "AboutView",
-    components: { Page }
+  name: "AboutView",
+  components: { Page },
 });
 </script>
 
