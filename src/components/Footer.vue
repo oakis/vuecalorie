@@ -14,7 +14,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 footer {
-  position: absolute;
+  position: relative;
   bottom: 0;
   width: calc(100% - 40%); // 100% - the page padding
   display: grid;
