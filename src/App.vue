@@ -50,7 +50,8 @@ p,
 a,
 span,
 label,
-li {
+li,
+textarea {
   font-family: "Roboto", sans-serif;
   color: var(--primary-font-color);
 }
@@ -67,49 +68,50 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
 
-  input,
-  button,
-  select,
-  textarea {
-    font-size: 1em;
-    margin: 0 0.5em 0 0;
-    padding: 10px;
-    border: 0;
-    border-radius: 5px;
-    box-shadow: 1px 1px 0.2em var(--primary-shadow);
-    outline: none;
+input,
+button,
+select,
+textarea {
+  font-size: 1em;
+  font-weight: normal;
+  margin: 0 0.5em 0 0;
+  padding: 10px;
+  border: 0;
+  border-radius: 5px;
+  box-shadow: 1px 1px 0.2em var(--primary-shadow);
+  outline: none;
+}
+
+button {
+  color: var(--white);
+  background-color: var(--primary-color);
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+// Classes
+.cta-button {
+  background-color: #94cc66;
+  box-shadow: 2px 2px 0.1em #558033;
+}
+
+.input-with-icon {
+  position: relative;
+
+  svg {
+    position: absolute;
+    left: 15px;
+    top: 15px;
   }
 
-  button {
-    color: var(--white);
-    background-color: var(--primary-color);
-    padding: 10px 20px;
-    cursor: pointer;
+  input {
+    padding-inline-start: 2em;
   }
+}
 
-  // Classes
-  .cta-button {
-    background-color: #94cc66;
-    box-shadow: 2px 2px 0.1em #558033;
-  }
-
-  .input-with-icon {
-    position: relative;
-
-    svg {
-      position: absolute;
-      left: 15px;
-      top: 15px;
-    }
-
-    input {
-      padding-inline-start: 2em;
-    }
-  }
-
-  .spacer {
-    padding: 1em;
-  }
+.spacer {
+  padding: 1em;
 }
 </style>

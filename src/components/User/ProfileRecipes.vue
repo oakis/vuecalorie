@@ -30,7 +30,7 @@ export default defineComponent({
       userRecipes: [] as IRecipe[],
       selectedRecipe: {} as IRecipe,
       ingredientInputValue: "",
-      instructions: [emptyInstruction] as IInstruction[],
+      instructions: [{ ...emptyInstruction }] as IInstruction[],
     };
   },
   async mounted() {
@@ -87,7 +87,7 @@ export default defineComponent({
           .then(() => {
             this.ingredients = [];
             this.recipeNameInputValue = "";
-            this.instructions = [emptyInstruction];
+            this.instructions = [{ ...emptyInstruction }];
             alert("Recept tillagt");
           })
           .catch((err) => {
@@ -115,7 +115,7 @@ export default defineComponent({
       }
     },
     addInstruction() {
-      this.instructions.push(emptyInstruction);
+      this.instructions.push({ ...emptyInstruction });
     },
   },
 });
@@ -133,7 +133,7 @@ export default defineComponent({
           @on-input="searchIngredient($event)"
           @on-click="addIngredient($event)"
         />
-        <hr class="divider" />
+        <hr v-if="ingredients.length > 0" class="divider" />
         <div v-if="ingredients.length > 0" id="create-recipe">
           <h3>Ingredienser:</h3>
           <table>
@@ -161,7 +161,7 @@ export default defineComponent({
           <li v-for="(instruction, index) in instructions" :key="`extras-${index}`">
             <div class="instruction">
               <input v-model="instruction.title" type="text" />
-              <textarea v-model="instruction.text" />
+              <textarea v-model="instruction.text" rows="3" />
             </div>
           </li>
         </ol>
@@ -196,13 +196,22 @@ export default defineComponent({
 }
 
 .steps-wrapper {
-  .instruction {
-    display: inline-flex;
-    justify-content: start;
-    align-items: flex-start;
-    width: 100%;
-    textarea {
-      width: 100%;
+  ol {
+    margin: 0;
+    li {
+      .instruction {
+        display: inline-flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        width: 100%;
+        textarea {
+          width: 100%;
+        }
+      }
+      margin-bottom: 1em;
+      &:last-of-type {
+        margin-bottom: 0;
+      }
     }
   }
 }

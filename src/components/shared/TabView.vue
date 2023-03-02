@@ -61,7 +61,7 @@ export default defineComponent({
     box-shadow: 8px 8px 5px #cccccc55;
     background-color: var(--white);
 
-    padding: 0.001em 1em 1em;
+    padding: 1em 2em 2em;
     border-radius: 0.5em;
     border-top-left-radius: 0;
   }
