@@ -4,6 +4,7 @@ import { GoogleAuthProvider, signInWithPopup, User, onAuthStateChanged } from "f
 import Page from "./shared/Page.vue";
 import { defineComponent } from "vue";
 import TabView from "./shared/TabView.vue";
+import { RouteRecordName, useRoute } from "vue-router";
 
 export default defineComponent({
   name: "UserComponent",
@@ -14,6 +15,7 @@ export default defineComponent({
   data: function () {
     return {
       user: null as User | null,
+      currentRoute: "" as RouteRecordName | null | undefined,
     };
   },
   mounted: function () {
@@ -21,6 +23,9 @@ export default defineComponent({
     onAuthStateChanged(auth, (user) => {
       this.user = user;
     });
+  },
+  updated: function () {
+    this.currentRoute = useRoute().name;
   },
   methods: {
     async registerUserWithGoogle() {
@@ -43,7 +48,7 @@ export default defineComponent({
   <Page>
     <div v-if="user" id="user">
       <h2>{{ user.displayName }} ({{ user.email }})</h2>
-      <TabView :user="user" />
+      <TabView :current-route="currentRoute" :user="user" />
     </div>
     <div v-else id="logged-out">
       <div id="logged-out-box">

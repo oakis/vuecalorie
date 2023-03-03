@@ -38,8 +38,9 @@ export default defineComponent({
   },
   methods: {
     async searchIngredient(inputValue: string) {
+      if (!inputValue) return;
       try {
-        doFetch(`Ingredients/${inputValue}`, {
+        doFetch(`Ingredients/search/${inputValue}`, {
           method: "POST",
         })
           .then((data) => {

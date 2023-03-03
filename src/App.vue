@@ -24,12 +24,12 @@ export default defineComponent({
 <style lang="scss">
 :root {
   --primary-color: #6e93d6;
-  --primary-shadow: #3d5a8f;
+  --primary-shadow: #ccccccff;
   --primary-background: #f5f5f5;
   --primary-font-color: #333;
 
   --secondary-color: #f5f5f5;
-  --secondary-shadow: #f5f5f5;
+  --secondary-shadow: #cccccc55;
   --secondary-background: #f5f5f5;
   --secondary-font-color: #333;
 

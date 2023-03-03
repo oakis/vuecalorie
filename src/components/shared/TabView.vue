@@ -11,7 +11,7 @@
         <button class="tab">Admin</button>
       </router-link>
     </div>
-    <div class="tabs-content">
+    <div :class="{ 'first-tab-active': currentRoute === 'profile', 'tabs-content': true }">
       <router-view :user="user" />
     </div>
   </div>
@@ -20,6 +20,7 @@
 <script lang="ts" setup>
 interface IProps {
   user: User;
+  currentRoute: RouteRecordName | null | undefined;
 }
 
 defineProps<IProps>();
@@ -28,14 +29,10 @@ defineProps<IProps>();
 <script lang="ts">
 import { User } from "@firebase/auth";
 import { defineComponent } from "vue";
+import { RouteRecordName } from "vue-router";
 
 export default defineComponent({
   name: "TabView",
-  data() {
-    return {
-      tabColor: "#6e93d6",
-    };
-  },
 });
 </script>
 
@@ -58,11 +55,13 @@ export default defineComponent({
   }
 
   .tabs-content {
-    box-shadow: 8px 8px 5px #cccccc55;
+    box-shadow: 8px 8px 5px var(--primary-shadow);
     background-color: var(--white);
 
     padding: 1em 2em 2em;
     border-radius: 0.5em;
+  }
+  .first-tab-active {
     border-top-left-radius: 0;
   }
 }
