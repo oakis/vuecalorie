@@ -16,32 +16,47 @@ import AutoComplete from "./shared/AutoComplete.vue";
 import Recipe from "./shared/Recipe.vue";
 import Page from "./shared/Page.vue";
 import { defineComponent } from "vue";
-import { fb } from "@/firebase";
+import { doFetch } from "@/helpers/fetch";
 
 export default defineComponent({
   components: {
     AutoComplete,
     Recipe,
-    Page
+    Page,
   },
-  data: function() {
+  data: function () {
     return {
       foundRecipes: [] as IRecipe[],
-      recipe: {} as IFullRecipe
-    }
+      recipe: {} as IRecipe,
+    };
   },
   methods: {
     async loadRecipe(id: string) {
-      const found = this.foundRecipes.find(recipe => recipe.id === id);
-      if (found) {
-        const ingredients: IIngredient[] = await Promise.all(found.ingredients.map(async (id: string) => await fb.getIngredientById(id)))
-        this.recipe = { ...found, ingredients };
+      try {
+        doFetch(`Recipes/${id}`)
+          .then((recipe) => {
+            this.recipe = recipe;
+          })
+          .catch((err) => {
+            throw err;
+          });
+      } catch (error) {
+        console.error(error);
       }
-      this.foundRecipes = [];
     },
 
     async searchRecipe(inputValue: string) {
-      this.foundRecipes = await fb.searchRecipe(inputValue);
+      try {
+        doFetch(`Recipes/${inputValue}`, { method: "POST" })
+          .then((recipes) => {
+            this.foundRecipes = recipes;
+          })
+          .catch((err) => {
+            throw err;
+          });
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
 });

@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "FooterComponent",
@@ -14,7 +14,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 footer {
-  position: absolute;
+  position: relative;
   bottom: 0;
   width: calc(100% - 40%); // 100% - the page padding
   display: grid;

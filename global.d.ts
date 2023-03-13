@@ -1,5 +1,3 @@
-type ISearchWords = string[];
-
 interface IExtras {
   [key: string]: number;
 }
@@ -12,19 +10,24 @@ interface IIngredient {
   fat?: number | null;
   protein?: number | null;
   extras?: IExtras[];
-  searchWords?: ISearchWords;
+}
+
+interface IRecipeIngredient extends IIngredient {
+  measure: string;
+  volume: number;
 }
 
 interface IRecipe {
   id: string;
   name: string;
-  ingredients: string[];
+  ingredients: IRecipeIngredient[];
+  instructions?: unknown[];
   createdBy: string;
-  searchWords?: ISearchWords;
-}
-
-interface IFullRecipe extends Omit<IRecipe, 'ingredients'> {
-  ingredients: IIngredient[];
 }
 
 type IconType = string[];
+
+interface IInstruction {
+  title: string;
+  text: string;
+}

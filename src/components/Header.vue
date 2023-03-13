@@ -4,22 +4,14 @@
       <a href="#/">
         <h1>
           Calorify
-          <Icon
-            icon="fa-solid fa-utensils"
-          />
+          <Icon icon="fa-solid fa-utensils" />
         </h1>
       </a>
       <nav>
-        <router-link to="/recipe">
-          Hitta recept
-        </router-link>
-        <router-link to="/about">
-          Om
-        </router-link>
+        <router-link to="/recipe"> Hitta recept </router-link>
+        <router-link to="/about"> Om </router-link>
         <router-link to="/user/profile">
-          <Icon
-            icon="fa-solid fa-user"
-          />
+          <Icon icon="fa-solid fa-user" />
         </router-link>
       </nav>
     </header>
@@ -35,8 +27,8 @@ export default defineComponent({
   name: "HeaderComponent",
   components: {
     Icon,
-    Page
-},
+    Page,
+  },
 });
 </script>
 
