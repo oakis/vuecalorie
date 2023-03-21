@@ -67,8 +67,16 @@ export default defineComponent({
       }
       this.foundIngredients = [];
     },
-    updateIngredientMeasure() {},
-    updateIngredientVolume() {},
+    updateIngredientMeasure(value: string, id: string) {
+      const oldIngredient = this.ingredients.find((o) => o.id === id);
+      if (!oldIngredient) return;
+      this.ingredients = this.ingredients.map((o) => {
+        if (o.id === id) {
+          return { ...oldIngredient, measure: value };
+        }
+        return o;
+      });
+    },
     async saveRecipe() {
       try {
         doFetch("Recipes", {
@@ -118,6 +126,9 @@ export default defineComponent({
     addInstruction() {
       this.instructions.push({ ...emptyInstruction });
     },
+    kek() {
+      console.log(this.ingredients);
+    },
   },
 });
 </script>
@@ -141,18 +152,21 @@ export default defineComponent({
             <thead>
               <tr>
                 <th>Mått</th>
-                <th>Volym</th>
+                <th>Volym / Antal</th>
                 <th>Råvara</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="item in ingredients" :key="item.id">
-                <td><MeasureSelect /></td>
-                <td><input /></td>
+                <td>
+                  <MeasureSelect @onUpdateMeasure="updateIngredientMeasure($event, item.id)" />
+                </td>
+                <td><input v-model="item.volume" type="number" /></td>
                 <td>{{ capitalize(item.name) }}</td>
               </tr>
             </tbody>
           </table>
+          <button @click="kek">console.log</button>
         </div>
       </div>
       <div class="steps-wrapper">

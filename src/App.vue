@@ -51,7 +51,9 @@ a,
 span,
 label,
 li,
-textarea {
+textarea,
+th,
+td {
   font-family: "Roboto", sans-serif;
   color: var(--primary-font-color);
 }
